@@ -11,7 +11,7 @@ if (! ex::chdir ( 'generatedHTML' )) {
 	throw new RuntimeException ( 'failed to go to generatedHTML folder!' );
 }
 
-(function                                                 /*generateIndexHTML*/()use(&$db) {
+(function                                                                 /*generateIndexHTML*/()use(&$db) {
 	ob_start ();
 	?>
 <!DOCTYPE HTML>
@@ -34,7 +34,7 @@ if (! ex::chdir ( 'generatedHTML' )) {
 </html>
 <?php
 	$html = ob_get_clean ();
-	file_put_contents ( 'index.html', $html );
+	ex::file_put_contents ( 'index.html', $html );
 }) ();
 (function () use (&$db) {
 	ob_start ();
@@ -52,9 +52,21 @@ table.sortable thead {
 	cursor: default;
 }
 </style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+<script src="sorttable.js"></script>
 </head>
 <body>
-	<div></div>
+	<div>
+	<?php
+	$monsters = $db->query ( 'SELECT *,(`experience`*1.0)/(`health_max`*1.0) AS `exp_ratio` FROM monsters' )->fetchAll ( PDO::FETCH_ASSOC );
+	foreach ( $monsters as &$monster ) {
+		$monster ['name'] = $monster ['name'] . '<img src="' . hhb_tohtml ( ( string ) $monster ['thumbnail_url'] ) . '" ></img>';
+		unset ( $monster ['thumbnail_url'] );
+	}
+	echo generateSortableHTMLFromTableArray ( $monsters );
+	?>
+	</div>
 	<br />
 	<br />
 	<small>monster lib version 0-dev, generated on <?php echo date(DATE_RFC2822);?></small>
@@ -158,7 +170,7 @@ CREATE TABLE `items`(
 SQLITESCHEMA;
 	
 	$db->exec ( $schema );
-	(function                                                                                                         /*addItemsToDB*/($db) {
+	(function                                                                                                                         /*addItemsToDB*/($db) {
 		
 		/*
 		 * FIXME: the OTB format is complex and poorly documented (at least the 7.6/OTServ 0.5.0 version of the format)
@@ -206,7 +218,7 @@ SQLITESCHEMA;
 		}
 		unset ( $insid, $insname, $insdescription, $stm );
 	}) ( $db );
-	(function                                                                                                        /*addMonstersToDB*/($db) use ($OTDataDir) {
+	(function                                                                                                                        /*addMonstersToDB*/($db) use ($OTDataDir) {
 		$summons = (function ($summonXML): array {
 			$domd = @DOMDocument::loadHTML ( $summonXML );
 			if (! $domd) {
@@ -395,6 +407,7 @@ function generateSortableHTMLFromTableArray($tableArray) {
 				// }
 			}
 		}
+		$keys = array_keys ( $keys );
 	}) ();
 	ob_start ();
 	?>
