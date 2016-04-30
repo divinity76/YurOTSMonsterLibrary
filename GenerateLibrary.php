@@ -11,7 +11,7 @@ if (! ex::chdir ( 'generatedHTML' )) {
 	throw new RuntimeException ( 'failed to go to generatedHTML folder!' );
 }
 
-(function                                                                 /*generateIndexHTML*/()use(&$db) {
+(function                                                                                                                       /*generateIndexHTML*/()use(&$db) {
 	ob_start ();
 	?>
 <!DOCTYPE HTML>
@@ -25,7 +25,9 @@ if (! ex::chdir ( 'generatedHTML' )) {
 	here you can read about <?php echo $db->query('SELECT COUNT(*) AS res FROM monsters')->fetch(PDO::FETCH_ASSOC)['res'];?> monsters and
 	<?php echo $db->query('SELECT COUNT(*) AS res FROM `items`')->fetch(PDO::FETCH_ASSOC)['res'];?> items on record!
 	<br /> <big><a href="monsters.html">to read about monsters, click here</a></big><br />
-		<br /> <big><a href="items.html">to read about items, click here</a></big>
+		and <br /> <big><a href="items.html">to read about items, click here</a></big><br />
+		and <br /> <big><a href="dbquery.html">geeks can even query the SQL
+				monster database directly, click here</a></big>
 	</div>
 	<br />
 	<br />
@@ -36,7 +38,7 @@ if (! ex::chdir ( 'generatedHTML' )) {
 	$html = ob_get_clean ();
 	ex::file_put_contents ( 'index.html', $html );
 }) ();
-(function () use (&$db) {
+(function                                                   /*createMonsters.html*/() use (&$db) {
 	ob_start ();
 	?>
 <!DOCTYPE HTML>
@@ -61,8 +63,20 @@ table.sortable thead {
 	<?php
 	$monsters = $db->query ( 'SELECT *,(`experience`*1.0)/(`health_max`*1.0) AS `exp_ratio` FROM monsters' )->fetchAll ( PDO::FETCH_ASSOC );
 	foreach ( $monsters as &$monster ) {
-		$monster ['name'] = $monster ['name'] . '<img src="' . hhb_tohtml ( ( string ) $monster ['thumbnail_url'] ) . '" ></img>';
+		$tmpname = $monster ['name'];
+		$monster ['name'] = '<img style="max-width:65px;max-height:65px;" src="' . hhb_tohtml ( ( string ) $monster ['thumbnail_url'] ) . '" ></img><br/>' . $monster ['name'];
+		$monster ['name'] = '<a href="monsters/' . hhb_tohtml ( urlencode ( $tmpname ) ) . '.html" target="_blank" >' . $monster ['name'] . '</a>';
 		unset ( $monster ['thumbnail_url'] );
+		$lootstr = '';
+
+		foreach ( $db->query ( 'SELECT monster_loot.countmax,items.name,items.description FROM monster_loot INNER JOIN items ON items.id = monster_loot.item_id WHERE monster_loot.monster_id = ' . $db->quote ( ( string ) $monster ['id'] ), PDO::FETCH_ASSOC ) as $loot ) {
+			$lootstr .= '<a href="' . hhb_tohtml ( urlencode ( $loot ['name'] ) ) . '">' . hhb_tohtml ( $loot ['name'] );
+			if ($loot ['countmax'] > 1) {
+				$lootstr .= '(0-' . (hhb_tohtml ( $loot ['countmax'] )) . ')';
+			}
+			$lootstr .= '</a> - ';
+		}
+		// disabled for now... $monster ['loot'] = $lootstr;
 	}
 	echo generateSortableHTMLFromTableArray ( $monsters );
 	?>
@@ -76,6 +90,46 @@ table.sortable thead {
 	$html = ob_get_clean ();
 	ex::file_put_contents ( 'monsters.html', $html );
 }) ();
+(function                       /*genrateIndividualMonsterFiles*/()use(&$db) {
+	if (! is_dir ( 'monsters' )) {
+		ex::mkdir ( 'monsters', 664 );
+	}
+	foreach ( $db->query ( 'SELECT * FROM monsters', PDO::FETCH_ASSOC ) as $monster ) {
+		$tmpname = $monster ['name'];
+
+		$monster ['name'] = '<img style="max-width:65px;max-height:65px;" src="' . hhb_tohtml ( ( string ) $monster ['thumbnail_url'] ) . '" ></img><br/>' . $monster ['name'];
+		$monster ['name'] = '' . $monster ['name'] . '';
+		unset ( $monster ['thumbnail_url'] );
+		$lootstr = '';
+		foreach ( $db->query ( 'SELECT monster_loot.countmax,items.name,items.description FROM monster_loot INNER JOIN items ON items.id = monster_loot.item_id WHERE monster_loot.monster_id = ' . $db->quote ( ( string ) $monster ['id'] ), PDO::FETCH_ASSOC ) as $loot ) {
+			$lootstr .= '<a href="' . hhb_tohtml ( urlencode ( $loot ['name'] ) ) . '">' . hhb_tohtml ( $loot ['name'] );
+			if ($loot ['countmax'] > 1) {
+				$lootstr .= '(0-' . (hhb_tohtml ( $loot ['countmax'] )) . ')';
+			}
+			$lootstr .= '</a> - ';
+		}
+		$monster ['loot'] = $lootstr;
+		unset ( $lootstr, $loot );
+		ob_start ();
+		?>
+<!DOCTYPE HTML>
+<html>
+<head>
+<title><?php echo hhb_tohtml($monster['name']);?> - monster lib</title>
+</head>
+<body>
+	<div>
+		<?php echo generateSortableHTMLFromTableArray(array($monster));?>
+
+
+	</div>
+</body>
+</html>
+<?php
+		$html = ob_get_clean ();
+		ex::file_put_contents ( 'monsters/' . $tmpname . '.html', $html );
+	}
+}) ();
 
 $query = <<<'SQL'
 SELECT * FROM monsters
@@ -88,7 +142,7 @@ foreach ( $db->query ( $query, PDO::FETCH_ASSOC ) as $monster ) {
 function getDB($OTDataDir) {
 	$db = new PDO ( /*'sqlite::memory:'*/'sqlite:' . __DIR__ . '/GeneratedHTML/monsterdb.sqlite3', '', '', array (
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-			PDO::ATTR_EMULATE_PREPARES => false 
+			PDO::ATTR_EMULATE_PREPARES => false
 	) );
 	$db->exec ( 'PRAGMA synchronous = OFF' );
 	$db->exec ( 'PRAGMA journal_mode = MEMORY' );
@@ -168,10 +222,10 @@ CREATE TABLE `items`(
 		thumbnail_url VARCHAR(255)
 );
 SQLITESCHEMA;
-	
+
 	$db->exec ( $schema );
-	(function                                                                                                                         /*addItemsToDB*/($db) {
-		
+	(function                                                                                                                                                                               /*addItemsToDB*/($db) {
+
 		/*
 		 * FIXME: the OTB format is complex and poorly documented (at least the 7.6/OTServ 0.5.0 version of the format)
 		 * so instead of implementing a full otb parser, i modified otserv to give me the php source code,
@@ -218,7 +272,7 @@ SQLITESCHEMA;
 		}
 		unset ( $insid, $insname, $insdescription, $stm );
 	}) ( $db );
-	(function                                                                                                                        /*addMonstersToDB*/($db) use ($OTDataDir) {
+	(function                                                                                                                                                                              /*addMonstersToDB*/($db) use ($OTDataDir) {
 		$summons = (function ($summonXML): array {
 			$domd = @DOMDocument::loadHTML ( $summonXML );
 			if (! $domd) {
@@ -326,7 +380,7 @@ SQLITESCHEMA;
 			if (! $monsterDOMD) {
 				throw new RuntimeException ( 'Failed to load monster file ' . $monsterXML );
 			}
-			
+
 			$monster = $monsterDOMD->getElementsByTagName ( "monster" )->item ( 0 );
 			$ins_name = $monster->getAttribute ( "name" );
 			if (strlen ( $ins_name ) < 1) {
@@ -357,7 +411,7 @@ SQLITESCHEMA;
 			$ins_combat_targetdistance = $monsterDOMD->getElementsByTagName ( "combat" )->item ( 0 )->getAttribute ( 'targetdistance' );
 			$ins_combat_runonhealth = $monsterDOMD->getElementsByTagName ( "combat" )->item ( 0 )->getAttribute ( 'runonhealth' );
 			$blood = $monsterDOMD->getElementsByTagName ( 'blood' )->item ( 0 );
-			
+
 			$ins_blood_color = ! $blood ? 0 : $blood->getAttribute ( 'color' );
 			$ins_blood_effect = ! $blood ? 0 : $blood->getAttribute ( 'effect' );
 			$ins_blood_splash = ! $blood ? 0 : $blood->getAttribute ( 'splash' );
@@ -365,7 +419,7 @@ SQLITESCHEMA;
 			$ins_thumbnail_url = getImageThumbnailOfThing ( $ins_name );
 			$stm->execute ();
 			$monster_id = $db->lastInsertId ();
-			
+
 			$loot_ins_monster_id = $monster_id;
 			foreach ( $monsterDOMD->getElementsByTagName ( "item" ) as $loot ) {
 				$loot_ins_item_id = $loot->getAttribute ( 'id' );
@@ -389,7 +443,7 @@ SQLITESCHEMA;
 			}
 		}
 	}) ( $db );
-	
+
 	return $db;
 }
 function requireCLI() {
@@ -397,7 +451,7 @@ function requireCLI() {
 		die ( 'this script is meant to be run from command line only..' );
 	}
 }
-function generateSortableHTMLFromTableArray($tableArray) {
+function generateSortableHTMLFromTableArray(array $tableArray): string {
 	$keys = [ ];
 	(function () use (&$tableArray, &$keys) {
 		foreach ( $tableArray as $foo ) {
@@ -453,7 +507,7 @@ function getImageThumbnailOfThing(string $thing): string {
 	// $thing=ForceUTF8\Encoding::toUTF8($thing);
 	static $cache = false; // yeah its worth it.
 	$save = function () use (&$cache) {
-		
+
 		// $starttime = microtime ( true );
 		$json = json_encode ( $cache, JSON_PRETTY_PRINT | JSON_BIGINT_AS_STRING | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
 		if (false === $json) {
@@ -495,7 +549,7 @@ function getImageThumbnailOfThing(string $thing): string {
 						if (0 === stripos ( $url, 'data:' )) {
 							continue;
 						}
-						
+
 						$cache [$name] = $url;
 						echo "added " . $name . PHP_EOL;
 						if (false !== strpos ( $name, ' corpse' )) {
@@ -523,7 +577,7 @@ function getImageThumbnailOfThing(string $thing): string {
 		if (false !== stripos ( $domd->getElementById ( "WikiaPageHeader" )->textContent, 'Redirected from' )) {
 			$name = trim ( $domd->getElementById ( "WikiaPageHeader" )->getElementsByTagName ( "h1" )->item ( 0 )->textContent );
 		}
-		
+
 		foreach ( $domd->getElementsByTagName ( "*" ) as $ele ) {
 			if (strcasecmp ( $ele->getAttribute ( "alt" ), $name ) !== 0) { // FIXME: UTF8 strcasecmp
 				continue;
@@ -532,7 +586,7 @@ function getImageThumbnailOfThing(string $thing): string {
 			return $ele->getAttribute ( "src" );
 		}
 		unset ( $ele, $name );
-		
+
 		// failed... look for a "did you mean?" suggestion..
 		foreach ( $domd->getElementsByTagName ( "b" ) as $ele ) {
 			if (false === stripos ( $ele->textContent, 'Did you mean' )) {
@@ -560,13 +614,13 @@ function getImageThumbnailOfThing(string $thing): string {
 		}
 		return false;
 	};
-	
+
 	if (isset ( $cache [mb_strtolower ( $thing, 'UTF-8' )] )) {
 		return $cache [mb_strtolower ( $thing, 'UTF-8' )];
 	}
 	echo "getting thumbnail url for \"" . $thing . "\": ";
 	$url = $internalGetImageThumbnailOfThing ( $thing );
-	
+
 	if ($url === false) {
 		$url = $internalGetImageThumbnailOfThing ( $thing . ' (Tile)' );
 	}
