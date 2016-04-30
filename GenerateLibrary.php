@@ -1,16 +1,17 @@
 <?php
 declare(strict_types = 1);
 require_once ('hhb_.inc.php');
+require_once ('exphp.inc.php');
 $OTDataDir = 'C:\tibia\YurOTS\data';
 $OTDataDir = str_replace ( '\\', '/', $OTDataDir );
 hhb_init ();
 requireCLI ();
 $db = getDB ( $OTDataDir );
-if (! chdir ( 'generatedHTML' )) {
+if (! ex::chdir ( 'generatedHTML' )) {
 	throw new RuntimeException ( 'failed to go to generatedHTML folder!' );
 }
 
-(function                            /*generateIndexHTML*/()use(&$db) {
+(function                                                 /*generateIndexHTML*/()use(&$db) {
 	ob_start ();
 	?>
 <!DOCTYPE HTML>
@@ -34,6 +35,34 @@ if (! chdir ( 'generatedHTML' )) {
 <?php
 	$html = ob_get_clean ();
 	file_put_contents ( 'index.html', $html );
+}) ();
+(function () use (&$db) {
+	ob_start ();
+	?>
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>monsters - monster lib</title>
+<style type="text/css">
+/* Sortable tables */
+table.sortable thead {
+	background-color: #eee;
+	color: #666666;
+	font-weight: bold;
+	cursor: default;
+}
+</style>
+</head>
+<body>
+	<div></div>
+	<br />
+	<br />
+	<small>monster lib version 0-dev, generated on <?php echo date(DATE_RFC2822);?></small>
+</body>
+</html>
+<?php
+	$html = ob_get_clean ();
+	ex::file_put_contents ( 'monsters.html', $html );
 }) ();
 
 $query = <<<'SQL'
@@ -129,7 +158,7 @@ CREATE TABLE `items`(
 SQLITESCHEMA;
 	
 	$db->exec ( $schema );
-	(function                                                                                    /*addItemsToDB*/($db) {
+	(function                                                                                                         /*addItemsToDB*/($db) {
 		
 		/*
 		 * FIXME: the OTB format is complex and poorly documented (at least the 7.6/OTServ 0.5.0 version of the format)
@@ -177,7 +206,7 @@ SQLITESCHEMA;
 		}
 		unset ( $insid, $insname, $insdescription, $stm );
 	}) ( $db );
-	(function                                                                                   /*addMonstersToDB*/($db) use ($OTDataDir) {
+	(function                                                                                                        /*addMonstersToDB*/($db) use ($OTDataDir) {
 		$summons = (function ($summonXML): array {
 			$domd = @DOMDocument::loadHTML ( $summonXML );
 			if (! $domd) {
@@ -356,6 +385,56 @@ function requireCLI() {
 		die ( 'this script is meant to be run from command line only..' );
 	}
 }
+function generateSortableHTMLFromTableArray($tableArray) {
+	$keys = [ ];
+	(function () use (&$tableArray, &$keys) {
+		foreach ( $tableArray as $foo ) {
+			foreach ( array_keys ( $foo ) as $key ) {
+				// if (! isset ( $keys [$key] )) {
+				$keys [$key] = true;
+				// }
+			}
+		}
+	}) ();
+	ob_start ();
+	?>
+<table class="sortable">
+	<thead>
+		<tr>
+<?php
+	foreach ( $keys as $key ) {
+		echo '<th>' . hhb_tohtml ( $key ) . '</th>' . "\n";
+	}
+	unset ( $key );
+	?>
+		</tr>
+	</thead>
+	<tbody>
+<?php
+	foreach ( $tableArray as $table ) {
+		echo "<tr>\n";
+		foreach ( $keys as $key ) {
+			echo '<td>' . ($table [$key] ?? '') . '</td>' . "\n";
+		}
+		echo "</tr>\n";
+	}
+	?>
+	</tbody>
+	<tfoot>
+		<!--  		<tr>
+			<td>TOTAL</td>
+			<td>Åí45,000</td>
+		</tr>
+		-->
+	</tfoot>
+</table>
+<?php
+	return ob_get_clean ();
+	$dom = new DOMDocument ();
+	$table = $dom->createElement ( 'table' );
+	$table->setAttribute ( 'class', 'sortable' );
+	$thread = $table->appendChild ( $dom->createElement ( 'thread' ) );
+}
 function getImageThumbnailOfThing(string $thing): string {
 	// Optimally we should parse the tibia.spr instead of this shit.. :/
 	// $thing=ForceUTF8\Encoding::toUTF8($thing);
@@ -368,7 +447,7 @@ function getImageThumbnailOfThing(string $thing): string {
 			throw new RuntimeException ( 'json_encode fail: ' . var_export ( json_last_error (), true ) . ": " . var_export ( json_last_error_msg (), true ) );
 		}
 		$json = str_replace ( '\u0026', '&', $json ); // annoying enough to warrant even a hacky fix..
-		file_put_contents ( 'ImageThumbnailURLCache.json', $json );
+		ex::file_put_contents ( 'ImageThumbnailURLCache.json', $json );
 		// echo "used " . (microtime ( true ) - $starttime) . PHP_EOL;
 	};
 	if ($cache === false) {
