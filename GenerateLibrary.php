@@ -1,7 +1,6 @@
 <?php
 declare(strict_types = 1);
 require_once ('hhb_.inc.php');
-require_once ('ForceUTF8.php');
 $OTDataDir = 'C:\tibia\YurOTS\data';
 $OTDataDir = str_replace ( '\\', '/', $OTDataDir );
 hhb_init ();
@@ -11,7 +10,7 @@ if (! chdir ( 'generatedHTML' )) {
 	throw new RuntimeException ( 'failed to go to generatedHTML folder!' );
 }
 
-(function                          /*generateIndexHTML*/()use(&$db) {
+(function                            /*generateIndexHTML*/()use(&$db) {
 	ob_start ();
 	?>
 <!DOCTYPE HTML>
@@ -46,7 +45,7 @@ foreach ( $db->query ( $query, PDO::FETCH_ASSOC ) as $monster ) {
 	die ();
 }
 function getDB($OTDataDir) {
-	$db = new PDO ( /*'sqlite::memory:'*/'sqlite:monsterdb.sqlite3', '', '', array (
+	$db = new PDO ( /*'sqlite::memory:'*/'sqlite:' . __DIR__ . '/GeneratedHTML/monsterdb.sqlite3', '', '', array (
 			PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 			PDO::ATTR_EMULATE_PREPARES => false 
 	) );
@@ -130,7 +129,7 @@ CREATE TABLE `items`(
 SQLITESCHEMA;
 	
 	$db->exec ( $schema );
-	(function                                                                                  /*addItemsToDB*/($db) {
+	(function                                                                                    /*addItemsToDB*/($db) {
 		
 		/*
 		 * FIXME: the OTB format is complex and poorly documented (at least the 7.6/OTServ 0.5.0 version of the format)
@@ -178,7 +177,7 @@ SQLITESCHEMA;
 		}
 		unset ( $insid, $insname, $insdescription, $stm );
 	}) ( $db );
-	(function                                                                                 /*addMonstersToDB*/($db) use ($OTDataDir) {
+	(function                                                                                   /*addMonstersToDB*/($db) use ($OTDataDir) {
 		$summons = (function ($summonXML): array {
 			$domd = @DOMDocument::loadHTML ( $summonXML );
 			if (! $domd) {
