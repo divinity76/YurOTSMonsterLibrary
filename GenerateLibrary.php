@@ -6,23 +6,19 @@ $OTDataDir = 'C:\tibia\YurOTS\data';
 $OTDataDir = str_replace ( '\\', '/', $OTDataDir );
 hhb_init ();
 requireCLI ();
+echo "generating SQLite db.." . PHP_EOL;
 $db = getDB ( $OTDataDir );
 if (! is_dir ( 'GeneratedHTML' )) {
 	ex::mkdir ( 'GeneratedHTML', 0664 );
 }
 
-(function () {
-	$files = glob ( 'GeneratedHTML_defaultfiles/*' );
-	foreach ( $files as $file ) {
-		ex::copy ( $file, 'GeneratedHTML/' . basename ( $file ) );
-	}
-}) ();
+recurse_copy ( 'GeneratedHTML_defaultFiles', 'GeneratedHTML' );
 if (! ex::chdir ( 'generatedHTML' )) {
 	throw new RuntimeException ( 'failed to go to generatedHTML folder!' );
 }
 /* generate index.html */
 (function () use (&$db) {
-	
+	echo "generating index.html...";
 	ob_start ();
 	?>
 <!DOCTYPE HTML>
@@ -34,11 +30,11 @@ if (! ex::chdir ( 'generatedHTML' )) {
 	<div>
 		welcome to monster lib!<br />
 	here you can read about <?php echo $db->query('SELECT COUNT(*) AS res FROM monsters')->fetch(PDO::FETCH_ASSOC)['res'];?> monsters and
-	<?php echo $db->query('SELECT COUNT(*) AS res FROM `items`')->fetch(PDO::FETCH_ASSOC)['res'];?> items on record!
+	<?php echo $db->query('SELECT COUNT(DISTINCT(name)) AS res FROM `items`')->fetch(PDO::FETCH_ASSOC)['res'];?> items on record!
 	<br /> <big><a href="monsters.html">to read about monsters, click here</a></big><br />
 		and <br /> <big><a href="items.html">to read about items, click here</a></big><br />
-		and <br /> <big><a href="dbquery.html">geeks can even query the SQL
-				monster database directly, click here</a></big>
+		and <br /> <big><a href="SQLGUI/index.html">geeks can even query the
+				SQL monster database directly, click here</a></big>
 	</div>
 	<br />
 	<br />
@@ -48,9 +44,11 @@ if (! ex::chdir ( 'generatedHTML' )) {
 <?php
 	$html = trim ( ob_get_clean () );
 	ex::file_put_contents ( 'index.html', $html );
+	echo "done" . PHP_EOL;
 }) ();
 /* generate monsters.html */
 (function () use (&$db) {
+	echo "generating monsters.html...";
 	ob_start ();
 	?>
 <!DOCTYPE HTML>
@@ -73,7 +71,7 @@ table.sortable thead {
 <body>
 	<div>
 	<?php
-	$monsters = $db->query ( 'SELECT *,(`experience`*1.0)/(`health_max`*1.0) AS `exp/hp ratio` FROM monsters' )->fetchAll ( PDO::FETCH_ASSOC );
+	$monsters = $db->query ( 'SELECT *,(`experience`*1.0)/(`health_max`*1.0) AS `exp/hp ratio` FROM monsters ORDER BY experience,name ASC' )->fetchAll ( PDO::FETCH_ASSOC );
 	foreach ( $monsters as &$monster ) {
 		$tmpname = $monster ['name'];
 		
@@ -91,6 +89,7 @@ table.sortable thead {
 			$lootstr .= '</a> - ';
 		}
 		// disabled for now... $monster ['loot'] = $lootstr;
+		unset ( $monster ['id'] );
 	}
 	echo generateSortableHTMLFromTableArray ( $monsters );
 	?>
@@ -102,6 +101,7 @@ table.sortable thead {
 </html>
 <?php
 	$html = trim ( ob_get_clean () );
+	echo "done" . PHP_EOL;
 	ex::file_put_contents ( 'monsters.html', $html );
 }) ();
 /* genrate individual monster files */
@@ -111,6 +111,7 @@ table.sortable thead {
 	}
 	foreach ( $db->query ( 'SELECT *,(`experience`*1.0)/(`health_max`*1.0) AS `exp/hp ratio` FROM monsters', PDO::FETCH_ASSOC ) as $monster ) {
 		$tmpname = $monster ['name'];
+		echo "generating monsters/" . $tmpname . '.html...';
 		$monster ['name'] = '<img alt="' . hhb_tohtml ( $tmpname ) . '"style="max-width:65px;max-height:65px;" src="' . hhb_tohtml ( ( string ) $monster ['thumbnail_url'] ) . '" /><br/>' . $monster ['name'];
 		// $monster ['name'] = '' . $monster ['name'] . '';
 		unset ( $monster ['thumbnail_url'] );
@@ -151,11 +152,13 @@ table.sortable thead {
 </html>
 <?php
 		$html = trim ( ob_get_clean () );
+		echo "done" . PHP_EOL;
 		ex::file_put_contents ( 'monsters/' . $tmpname . '.html', $html );
 	}
 }) ();
 /* Generate items.html */
 (function () use (&$db) {
+	echo "generating items.html...";
 	ob_start ();
 	?>
 <!DOCTYPE HTML>
@@ -180,8 +183,7 @@ table.sortable thead {
 	<div>
 <?php
 	$itemsArr = [ ];
-	
-	foreach ( $db->query ( 'SELECT id,name,description,thumbnail_url FROM `items` ', PDO::FETCH_ASSOC ) as $item ) {
+	foreach ( $db->query ( 'SELECT items.id AS id,items.name AS name, items.description AS description,items.thumbnail_url AS thumbnail_url FROM `items` INNER JOIN monster_loot ON monster_loot.item_id = items.id GROUP BY items.name ORDER BY COUNT(monster_loot.item_id=items.id) DESC', PDO::FETCH_ASSOC ) as $item ) {
 		$tmpname = $item ['name'];
 		$item ['name'] = '<a href="items/' . hhb_tohtml ( rawurlencode ( $tmpname ) ) . '.html"><img style="max-width:65px;max-height:65px;" src="' . hhb_tohtml ( $item ['thumbnail_url'] ) . '" alt="' . hhb_tohtml ( $item ['name'] ) . '" /><br/>' . hhb_tohtml ( $item ['name'] ) . '</a>';
 		unset ( $item ['thumbnail_url'] );
@@ -194,6 +196,7 @@ table.sortable thead {
 			$loot .= '</a> - ';
 		}
 		$item ['dropped by'] = $loot; // TODO: would be prettier if it was sorted by what drops most of it...
+		unset ( $item ['id'] );
 		$itemsArr [] = $item;
 	}
 	echo generateSortableHTMLFromTableArray ( $itemsArr );
@@ -208,6 +211,7 @@ table.sortable thead {
 
 <?php
 	$html = trim ( ob_get_clean () );
+	echo "done" . PHP_EOL;
 	ex::file_put_contents ( 'items.html', $html );
 }) ();
 /* generate individual item.html files */
@@ -215,8 +219,11 @@ table.sortable thead {
 	if (! is_dir ( 'items' )) {
 		ex::mkdir ( 'items', 0664 );
 	}
-	foreach ( $db->query ( 'SELECT id,name,description,thumbnail_url FROM `items`', PDO::FETCH_ASSOC ) as $item ) {
+	foreach ( $db->query ( 'SELECT items.id AS id,items.name AS name,items.description AS description,items.thumbnail_url AS thumbnail_url FROM `items`', PDO::FETCH_ASSOC ) as $item ) {
+		// var_dump ( $item );
+		// die ();
 		$tmpname = $item ['name'];
+		echo "generating items/" . $tmpname . '.html...';
 		ob_start ();
 		?>
 <!DOCTYPE HTML>
@@ -259,6 +266,7 @@ table.sortable thead {
 </html>
 <?php
 		$html = trim ( ob_get_clean () );
+		echo "done" . PHP_EOL;
 		ex::file_put_contents ( 'items/' . $tmpname . '.html', $html );
 	}
 }) ();
@@ -838,3 +846,20 @@ function scriptname(): string {
 	}
 	return $name;
 }
+function recurse_copy($src, $dst, $dirmode = 0664) {
+	$dir = ex::opendir ( $src );
+	if (! is_dir ( $dst )) {
+		ex::mkdir ( $dst, $dirmode );
+	}
+	while ( false !== ($file = readdir ( $dir )) ) {
+		if (($file != '.') && ($file != '..')) {
+			if (is_dir ( $src . '/' . $file )) {
+				recurse_copy ( $src . '/' . $file, $dst . '/' . $file, $dirmode );
+			} else {
+				ex::copy ( $src . '/' . $file, $dst . '/' . $file );
+			}
+		}
+	}
+	closedir ( $dir );
+}
+
