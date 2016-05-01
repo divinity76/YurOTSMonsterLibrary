@@ -6,11 +6,11 @@ $OTDataDir = 'C:\tibia\YurOTS\data';
 $OTDataDir = str_replace ( '\\', '/', $OTDataDir );
 hhb_init ();
 requireCLI ();
-echo "generating SQLite db.." . PHP_EOL;
-$db = getDB ( $OTDataDir );
 if (! is_dir ( 'GeneratedHTML' )) {
 	ex::mkdir ( 'GeneratedHTML', 0664 );
 }
+echo "generating SQLite db.." . PHP_EOL;
+$db = getDB ( $OTDataDir );
 
 recurse_copy ( 'GeneratedHTML_defaultFiles', 'GeneratedHTML' );
 if (! ex::chdir ( 'generatedHTML' )) {
