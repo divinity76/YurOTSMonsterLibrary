@@ -285,7 +285,7 @@ function getDB($OTDataDir): PDO {
 			PDO::ATTR_EMULATE_PREPARES => false 
 	) );
 	$db->exec ( 'PRAGMA synchronous = OFF' );
-	$db->exec ( 'PRAGMA journal_mode = MEMORY' );
+	$db->exec ( 'PRAGMA journal_mode = OFF' );
 	$schema = <<<'SQLITESCHEMA'
 DROP TABLE IF EXISTS `monsters`;
 CREATE TABLE `monsters` (
