@@ -30,7 +30,7 @@ if (! ex::chdir ( 'generatedHTML' )) {
 	<div>
 		welcome to monster lib!<br />
 	here you can read about <?php echo $db->query('SELECT COUNT(*) AS res FROM monsters')->fetch(PDO::FETCH_ASSOC)['res'];?> monsters and
-	<?php echo $db->query('SELECT COUNT(DISTINCT(name)) AS res FROM `items`')->fetch(PDO::FETCH_ASSOC)['res'];?> items on record!
+	<?php echo $db->query('SELECT COUNT(*) AS res FROM `items`')->fetch(PDO::FETCH_ASSOC)['res'];?> items on record!
 	<br /> <big><a href="monsters.html">to read about monsters, click here</a></big><br />
 		and <br /> <big><a href="items.html">to read about items, click here</a></big><br />
 		and <br /> <big><a href="SQLGUI/index.html">geeks can even query the
@@ -116,10 +116,10 @@ table.sortable thead {
 		// $monster ['name'] = '' . $monster ['name'] . '';
 		unset ( $monster ['thumbnail_url'] );
 		$lootstr = '';
-		foreach ( $db->query ( 'SELECT monster_loot.countmax,items.name,items.description FROM monster_loot INNER JOIN items ON items.id = monster_loot.item_id WHERE monster_loot.monster_id = ' . $db->quote ( ( string ) $monster ['id'] ), PDO::FETCH_ASSOC ) as $loot ) {
-			$lootstr .= '<a href="./../items/' . hhb_tohtml ( rawurlencode ( $loot ['name'] ) ) . '.html">' . hhb_tohtml ( $loot ['name'] );
-			if ($loot ['countmax'] > 1) {
-				$lootstr .= ' (1-' . (hhb_tohtml ( $loot ['countmax'] )) . ')';
+		foreach ( $db->query ( 'SELECT monster_loot.item_id,monster_loot.countmax,items.name,items.description FROM monster_loot INNER JOIN items ON items.id = monster_loot.item_id WHERE monster_loot.monster_id = ' . $db->quote ( ( string ) $monster ['id'] ), PDO::FETCH_ASSOC ) as $loot ) {
+			$lootstr .= '<a href="./../items/' . hhb_tohtml ( rawurlencode ( $loot ['name'] . '-' . $loot ['item_id'] ) ) . '.html">' . hhb_tohtml ( $loot ['name'] );
+			if ((( int ) $loot ['countmax']) > 1) {
+				$lootstr .= ' (1-' . (hhb_tohtml ( ( string ) $loot ['countmax'] )) . ')';
 			}
 			$lootstr .= '</a> - ';
 		}
@@ -183,13 +183,13 @@ table.sortable thead {
 	<div>
 <?php
 	$itemsArr = [ ];
-	// SELECT items.id AS id,items.name AS name, items.description AS description,items.thumbnail_url AS thumbnail_url FROM `items` INNER JOIN monster_loot ON monster_loot.item_id = items.id GROUP BY items.name ORDER BY COUNT(monster_loot.item_id=items.id) DESC
-	foreach ( $db->query ( 'SELECT items.id AS id,items.name AS name, items.description AS description,items.thumbnail_url AS thumbnail_url FROM `items` GROUP BY items.name ORDER BY (SELECT COUNT(*) FROM monster_loot WHERE monster_loot.item_id=items.id) DESC', PDO::FETCH_ASSOC ) as $item ) {
+	// SELECT items.id AS id,items.name AS name, items.description AS description,items.thumbnail_url AS thumbnail_url FROM `items` INNER JOIN monster_loot ON monster_loot.item_id = items.id ORDER BY COUNT(monster_loot.item_id=items.id) DESC
+	foreach ( $db->query ( 'SELECT items.id AS item_id,items.name AS name, items.description AS description,items.thumbnail_url AS thumbnail_url FROM `items` ORDER BY (SELECT COUNT(*) FROM monster_loot WHERE monster_loot.item_id=items.id) DESC', PDO::FETCH_ASSOC ) as $item ) {
 		$tmpname = $item ['name']; //
-		$item ['name'] = '<a href="items/' . hhb_tohtml ( rawurlencode ( $tmpname ) ) . '.html"><img style="max-width:65px;max-height:65px;" src="' . hhb_tohtml ( $item ['thumbnail_url'] ) . '" alt="' . hhb_tohtml ( $item ['name'] ) . '" /><br/>' . hhb_tohtml ( $item ['name'] ) . '</a>';
+		$item ['name'] = '<a href="items/' . hhb_tohtml ( rawurlencode ( $tmpname . '-' . $item ['item_id'] ) ) . '.html"><img style="max-width:65px;max-height:65px;" src="' . hhb_tohtml ( $item ['thumbnail_url'] ) . '" alt="' . hhb_tohtml ( $item ['name'] . '-' . $item ['item_id'] ) . '" /><br/>' . hhb_tohtml ( $item ['name'] ) . '</a>';
 		unset ( $item ['thumbnail_url'] );
 		$loot = '';
-		foreach ( $db->query ( 'SELECT monster_loot.countmax AS `count`,monsters.name AS `name` FROM `monster_loot` INNER JOIN monsters ON monster_loot.monster_id=monsters.id WHERE monster_loot.item_id = ' . $db->quote ( ( string ) $item ['id'] ), PDO::FETCH_ASSOC ) as $monster ) {
+		foreach ( $db->query ( 'SELECT monster_loot.countmax AS `count`,monsters.name AS `name` FROM `monster_loot` INNER JOIN monsters ON monster_loot.monster_id=monsters.id WHERE monster_loot.item_id = ' . $db->quote ( ( string ) $item ['item_id'] ), PDO::FETCH_ASSOC ) as $monster ) {
 			$loot .= '<a target="_blank" href="monsters/' . hhb_tohtml ( rawurlencode ( $monster ['name'] ) ) . '.html">' . hhb_tohtml ( $monster ['name'] );
 			if ((( int ) $monster ['count']) > 1) {
 				$loot .= ' (1-' . hhb_tohtml ( ( string ) $monster ['count'] ) . ')';
@@ -224,7 +224,7 @@ table.sortable thead {
 		// var_dump ( $item );
 		// die ();
 		$tmpname = $item ['name'];
-		echo "generating items/" . $tmpname . '.html...';
+		echo "generating items/" . $tmpname . '-' . $item ['id'] . '.html...';
 		ob_start ();
 		?>
 <!DOCTYPE HTML>
@@ -268,7 +268,7 @@ table.sortable thead {
 <?php
 		$html = trim ( ob_get_clean () );
 		echo "done" . PHP_EOL;
-		ex::file_put_contents ( 'items/' . $tmpname . '.html', $html );
+		ex::file_put_contents ( 'items/' . $tmpname . '-' . $item ['id'] . '.html', $html );
 	}
 }) ();
 $query = <<<'SQL'
