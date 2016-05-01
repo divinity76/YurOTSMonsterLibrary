@@ -120,6 +120,15 @@ table.sortable thead {
 <html>
 <head>
 <title><?php echo hhb_tohtml($tmpname);?> - monster lib</title>
+<style type="text/css">
+/* Sortable tables */
+table.sortable thead {
+	background-color: #eee;
+	color: #666666;
+	font-weight: bold;
+	cursor: default;
+}
+</style>
 </head>
 <body>
 	<div>
@@ -593,7 +602,7 @@ function generateSortableHTMLFromTableArray(array $tableArray): string {
 	<tbody>
 <?php
 	foreach ( $tableArray as $table ) {
-		echo "<tr>\n";
+		echo "<tr style=\"text-align:center;\">\n";
 		foreach ( $keys as $key ) {
 			echo '<td>' . ($table [$key] ?? '') . '</td>' . "\n";
 		}
