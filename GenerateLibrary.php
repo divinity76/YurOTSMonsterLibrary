@@ -703,7 +703,7 @@ function getImageThumbnailOfThing(string $thing): string {
 	}
 	$cache [mb_strtolower ( $thing, 'UTF-8' )] = $url;
 	$save ();
-	if ($ret === '') {
+	if ($url === '') {
 		return 'https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png';
 	}
 	return $url;
