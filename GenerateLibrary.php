@@ -7,6 +7,16 @@ $OTDataDir = str_replace ( '\\', '/', $OTDataDir );
 hhb_init ();
 requireCLI ();
 $db = getDB ( $OTDataDir );
+if (! is_dir ( 'GeneratedHTML' )) {
+	ex::mkdir ( 'GeneratedHTML', 0664 );
+}
+
+(function () {
+	$files = glob ( 'GeneratedHTML_defaultfiles/*' );
+	foreach ( $files as $file ) {
+		ex::copy($file,'GeneratedHTML/'.basename($file))
+	}
+}) ();
 if (! ex::chdir ( 'generatedHTML' )) {
 	throw new RuntimeException ( 'failed to go to generatedHTML folder!' );
 }
