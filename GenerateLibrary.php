@@ -174,7 +174,7 @@ table.sortable thead {
 			}
 			$loot .= '</a> - ';
 		}
-		$item ['dropped by'] = $loot;
+		$item ['dropped by'] = $loot; // TODO: would be prettier if it was sorted by what drops most of it...
 		$itemsArr [] = $item;
 	}
 	echo generateSortableHTMLFromTableArray ( $itemsArr );
@@ -193,6 +193,55 @@ table.sortable thead {
 }) ();
 /* generate individual item.html files */
 (function () use (&$db) {
+	if (! is_dir ( 'items' )) {
+		ex::mkdir ( 'items', 0664 );
+	}
+	foreach ( $db->query ( 'SELECT id,name,description,thumbnail_url FROM `items`', PDO::FETCH_ASSOC ) as $item ) {
+		$tmpname = $item ['name'];
+		ob_start ();
+		?>
+<!DOCTYPE HTML>
+<html>
+<head>
+<title><?php echo hhb_tohtml($tmpname);?></title>
+<style type="text/css">
+/* Sortable tables */
+table.sortable thead {
+	background-color: #eee;
+	color: #666666;
+	font-weight: bold;
+	cursor: default;
+}
+</style>
+</head>
+<body>
+	<div>
+<?php
+		$item ['name'] = '<img style="max-width:65px;max-height:65px;" src="' . hhb_tohtml ( $item ['thumbnail_url'] ) . '" alt="' . hhb_tohtml ( $item ['name'] ) . '" /><br/>' . hhb_tohtml ( $item ['name'] ) . '';
+		unset ( $item ['thumbnail_url'] );
+		$loot = '';
+		foreach ( $db->query ( 'SELECT monster_loot.countmax AS `count`,monsters.name AS `name` FROM `monster_loot` INNER JOIN monsters ON monster_loot.monster_id=monsters.id WHERE monster_loot.item_id = ' . $db->quote ( ( string ) $item ['id'] ), PDO::FETCH_ASSOC ) as $monster ) {
+			$loot .= '<a target="_blank" href="./../monsters/' . hhb_tohtml ( rawurlencode ( $monster ['name'] ) ) . '.html">' . hhb_tohtml ( $monster ['name'] );
+			if ((( int ) $monster ['count']) > 1) {
+				$loot .= ' (1-' . hhb_tohtml ( ( string ) $monster ['count'] ) . ')';
+			}
+			$loot .= '</a> - ';
+		}
+		$item ['dropped by'] = $loot; // TODO: would be prettier if it was sorted by what drops most of it...
+		echo generateSortableHTMLFromTableArray ( array (
+				$item 
+		) );
+		?>
+</div>
+	<br />
+	<br />
+	<small><?php echo scriptname();?></small>
+</body>
+</html>
+<?php
+		$html = trim ( ob_get_clean () );
+		ex::file_put_contents ( 'items/' . $tmpname . '.html', $html );
+	}
 }) ();
 $query = <<<'SQL'
 SELECT * FROM monsters
