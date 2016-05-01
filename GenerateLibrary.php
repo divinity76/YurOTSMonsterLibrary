@@ -14,7 +14,7 @@ if (! is_dir ( 'GeneratedHTML' )) {
 (function () {
 	$files = glob ( 'GeneratedHTML_defaultfiles/*' );
 	foreach ( $files as $file ) {
-		ex::copy($file,'GeneratedHTML/'.basename($file))
+		ex::copy ( $file, 'GeneratedHTML/' . basename ( $file ) );
 	}
 }) ();
 if (! ex::chdir ( 'generatedHTML' )) {
