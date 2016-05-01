@@ -287,7 +287,8 @@ CREATE TABLE `items`(
 SQLITESCHEMA;
 	
 	$db->exec ( $schema );
-	(function                                                                  /*addItemsToDB*/($db) {
+	/* add items to DB */
+	(function ($db) {
 		
 		/*
 		 * FIXME: the OTB format is complex and poorly documented (at least the 7.6/OTServ 0.5.0 version of the format)
@@ -335,7 +336,8 @@ SQLITESCHEMA;
 		}
 		unset ( $insid, $insname, $insdescription, $stm );
 	}) ( $db );
-	(function                                                                   /*addMonstersToDB*/($db) use ($OTDataDir) {
+	/* add monsters to DB */
+	(function ($db) use ($OTDataDir) {
 		$summons = (function ($summonXML): array {
 			$domd = @DOMDocument::loadHTML ( $summonXML );
 			if (! $domd) {
