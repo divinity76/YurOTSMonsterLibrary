@@ -183,8 +183,9 @@ table.sortable thead {
 	<div>
 <?php
 	$itemsArr = [ ];
-	foreach ( $db->query ( 'SELECT items.id AS id,items.name AS name, items.description AS description,items.thumbnail_url AS thumbnail_url FROM `items` INNER JOIN monster_loot ON monster_loot.item_id = items.id GROUP BY items.name ORDER BY COUNT(monster_loot.item_id=items.id) DESC', PDO::FETCH_ASSOC ) as $item ) {
-		$tmpname = $item ['name'];
+	// SELECT items.id AS id,items.name AS name, items.description AS description,items.thumbnail_url AS thumbnail_url FROM `items` INNER JOIN monster_loot ON monster_loot.item_id = items.id GROUP BY items.name ORDER BY COUNT(monster_loot.item_id=items.id) DESC
+	foreach ( $db->query ( 'SELECT items.id AS id,items.name AS name, items.description AS description,items.thumbnail_url AS thumbnail_url FROM `items` GROUP BY items.name ORDER BY (SELECT COUNT(*) FROM monster_loot WHERE monster_loot.item_id=items.id) DESC', PDO::FETCH_ASSOC ) as $item ) {
+		$tmpname = $item ['name']; //
 		$item ['name'] = '<a href="items/' . hhb_tohtml ( rawurlencode ( $tmpname ) ) . '.html"><img style="max-width:65px;max-height:65px;" src="' . hhb_tohtml ( $item ['thumbnail_url'] ) . '" alt="' . hhb_tohtml ( $item ['name'] ) . '" /><br/>' . hhb_tohtml ( $item ['name'] ) . '</a>';
 		unset ( $item ['thumbnail_url'] );
 		$loot = '';
