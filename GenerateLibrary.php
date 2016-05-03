@@ -6,6 +6,10 @@ $OTDataDir = 'C:\tibia\YurOTS\data';
 $OTDataDir = str_replace ( '\\', '/', $OTDataDir );
 hhb_init ();
 requireCLI ();
+if (! is_dir ( $OTDataDir )) {
+	throw new RuntimeException ( 'could not open the OT data dir. is it really this?: ' . hhb_return_var_dump ( $OTDataDir ) );
+}
+
 if (! is_dir ( 'GeneratedHTML' )) {
 	ex::mkdir ( 'GeneratedHTML', 0664 );
 }
