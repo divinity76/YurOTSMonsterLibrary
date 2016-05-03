@@ -19,7 +19,7 @@
     <br>
 
     <textarea id="commands">
-	SELECT name,experience,(`experience`*1.0)/(`health_max`*1.0) AS `exp/hp ratio` FROM monsters WHERE experience > 1000 ORDER BY `exp/hp ratio` DESC LIMIT 5;
+	SELECT name,experience,health_max,(`experience`*1.0)/(`health_max`*1.0) AS `exp/hp ratio` FROM monsters WHERE experience > 1000 ORDER BY `exp/hp ratio` DESC LIMIT 5;
 	SELECT * FROM sqlite_master;
 	SELECT 'your face';
 	</textarea>
