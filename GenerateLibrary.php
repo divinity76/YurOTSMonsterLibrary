@@ -467,8 +467,6 @@ SQLITESCHEMA;
 				ex::chdir ( $originalPath );
 			}
 		}) ();
-		hhb_var_dump ( $monsterXMLs );
-		die ();
 		if (! is_array ( $monsterXMLs ) || count ( $monsterXMLs ) < 2) {
 			throw new RuntimeException ( 'Unable to find monsters in ' . $OTDataDir . '/monster/' );
 		}
