@@ -431,7 +431,7 @@ SQLITESCHEMA;
 			return $ret;
 		}) ( $OTDataDir . '/summons.xml' );
 		// $monsterXMLs = glob ( $OTDataDir . '/monster/*.xml' );
-		$monsterXMLs = (function () use (&$OTDataDir) {
+		$monsterXMLs = (function () use (&$OTDataDir): array {
 			$originalPath = ex::getcwd ();
 			try {
 				ex::chdir ( $OTDataDir . '/monster/' );
