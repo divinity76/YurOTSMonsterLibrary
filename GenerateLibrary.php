@@ -430,11 +430,49 @@ SQLITESCHEMA;
 			}
 			return $ret;
 		}) ( $OTDataDir . '/summons.xml' );
-		$monsterXMLs = glob ( $OTDataDir . '/monster/*.xml' );
+		// $monsterXMLs = glob ( $OTDataDir . '/monster/*.xml' );
+		$monsterXMLs = (function () use (&$OTDataDir) {
+			$originalPath = ex::getcwd ();
+			try {
+				ex::chdir ( $OTDataDir . '/monster/' );
+				$monstersXMLpath = $OTDataDir . '/monster/monsters.xml';
+				if (! is_readable ( $monstersXMLpath )) {
+					throw new RuntimeException ( 'failed to find monsters.xml!' );
+				}
+				$domd = @DOMDocument::load ( $monstersXMLpath );
+				
+				if (! $domd) {
+					throw new RuntimeException ( 'failed to read ' . $monstersXMLpath );
+				}
+				$ret = [ ];
+				if ($domd->getElementsByTagName ( "monster" )->length < 1) {
+					throw new RuntimeException ( 'unable to find any monster tags in ' . $monstersXMLpath );
+				}
+				foreach ( $domd->getElementsByTagName ( "monster" ) as $monster ) {
+					$filename = $monster->getAttribute ( "file" );
+					if (strlen ( $filename ) < 1) {
+						throw new RuntimeException ( $monster->getAttribute ( "name" ) . ' monster tag does not have a meaningful file attribute!' );
+					}
+					if (! is_readable ( $filename )) {
+						throw new RuntimeException ( $monster->getAttribute ( "name" ) . ' monster tag refer to a file which is not readable! (' . hhb_return_var_dump ( $filename ) . ')' );
+					}
+					$filename = realpath ( $filename );
+					if (false === $filename) {
+						throw new RuntimeException ( $monster->getAttribute ( "name" ) . ' monster tag refer to a file of which the absolute path cannot be determined! this should never happen...' );
+					}
+					$ret [] = $filename;
+				}
+				return $ret;
+			} finally{
+				ex::chdir ( $originalPath );
+			}
+		}) ();
+		hhb_var_dump ( $monsterXMLs );
+		die ();
 		if (! is_array ( $monsterXMLs ) || count ( $monsterXMLs ) < 2) {
 			throw new RuntimeException ( 'Unable to find monsters in ' . $OTDataDir . '/monster/' );
 		}
-		unset ( $monsterXMLs [array_search ( $OTDataDir . '/monster/monsters.xml', $monsterXMLs )] );
+		// unset ( $monsterXMLs [array_search ( $OTDataDir . '/monster/monsters.xml', $monsterXMLs )] );
 		$stm = $db->prepare ( 'INSERT INTO monsters
 				(
 		name,
