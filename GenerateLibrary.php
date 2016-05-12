@@ -468,7 +468,7 @@ SQLITESCHEMA;
 			}
 		}) ();
 		if (! is_array ( $monsterXMLs ) || count ( $monsterXMLs ) < 2) {
-			throw new RuntimeException ( 'Unable to find monsters in ' . $OTDataDir . '/monster/' );
+			throw new RuntimeException ( 'Unable to find monsters in ' . $OTDataDir . '/monster/monsters.xml' );
 		}
 		// unset ( $monsterXMLs [array_search ( $OTDataDir . '/monster/monsters.xml', $monsterXMLs )] );
 		$stm = $db->prepare ( 'INSERT INTO monsters
