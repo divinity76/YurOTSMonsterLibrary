@@ -1,78 +1,20 @@
 <?php
 declare(strict_types = 1);
+/**
+ * convert any string to valid HTML, as losslessly as possible, assuming UTF-8
+ *
+ * @param string $str
+ * @return string
+ */
 function hhb_tohtml(string $str): string {
 	return htmlentities ( $str, ENT_QUOTES | ENT_HTML401 | ENT_SUBSTITUTE | ENT_DISALLOWED, 'UTF-8', true );
 }
-function hhb_mustbe(string $type, $variable)/*:decltype($variable)*/
-{
-	// should it be UnexpectedValueException or InvalidArgumentException?
-	// going with UnexpectedValueException for now...
-	if ($type === 'ip') {
-		$dbg = filter_var ( $variable, FILTER_VALIDATE_IP );
-		if ($dbg === false) {
-			throw new UnexpectedValueException ( 'variable is NOT a valid ip address!' );
-		}
-		return $variable;
-	} else if ($type === 'ipv4') {
-		$dbg = filter_var ( $variable, FILTER_VALIDATE_IP, array (
-				'flags' => FILTER_FLAG_IPV4,
-				'options' => array (
-						'default' => false 
-				) 
-		) );
-		if ($dbg === false) {
-			throw new UnexpectedValueException ( 'variable is NOT a valid ipv4 address!' );
-		}
-		return $variable;
-	} else if ($type === 'ipv6') {
-		$dbg = filter_var ( $variable, FILTER_VALIDATE_IP, array (
-				'flags' => FILTER_FLAG_IPV6,
-				'options' => array (
-						'default' => false 
-				) 
-		) );
-		if ($dbg === false) {
-			throw new UnexpectedValueException ( 'variable is NOT a valid ipv6 address!' );
-		}
-		return $variable;
-	}
-	$actual_type = gettype ( $variable );
-	if ($actual_type === 'unknown type') {
-		// i dont know how this can happen, but it is documented as a possible return value of gettype...
-		throw new Exception ( 'could not determine the type of the variable!' );
-	}
-	if ($actual_type === 'object') {
-		if (! is_a ( $variable, $type )) {
-			$dbg = get_class ( $variable );
-			throw new UnexpectedValueException ( 'variable is an object which does NOT implement class: ' . $type . '. it is of class: ' . $dbg );
-		}
-		return $variable;
-	}
-	if ($actual_type === 'resource') {
-		$dbg = get_resource_type ( $variable );
-		if ($dbg !== $type) {
-			throw new UnexpectedValueException ( 'variable is a resource, which is NOT of type: ' . $type . '. it is of type: ' . $dbg );
-		}
-		return $variable;
-	}
-	// now a few special cases
-	if ($type === 'bool') {
-		$parsed_type = 'boolean';
-	} else if ($type === 'int') {
-		$parsed_type = 'integer';
-	} else if ($type === 'float') {
-		$parsed_type = 'double';
-	} else if ($type === 'null') {
-		$parsed_type = 'NULL';
-	} else {
-		$parsed_type = $type;
-	}
-	if ($parsed_type !== $actual_type && $type !== $actual_type) {
-		throw new UnexpectedValueException ( 'variable is NOT of type: ' . $type . '. it is of type: ' . $actual_type );
-	}
-	// ok, variable passed all tests.
-	return $variable;
-}
+/**
+ * enhanced var_dump
+ *
+ * @param mixed $mixed...
+ * @return void
+ */
 function hhb_var_dump() {
 	// informative wrapper for var_dump
 	// <changelog>
@@ -153,12 +95,12 @@ function hhb_var_dump() {
 						case T_INLINE_HTML :
 							{
 								$tmpUnsetKeyArray [] = $xKey;
-								continue;
+								continue 2;
 							}
 							;
 						default :
 							{
-								continue;
+								continue 2;
 							}
 					}
 				} else if (is_string ( $xToken )) {
@@ -357,6 +299,12 @@ function hhb_var_dump() {
 	echo $settings ['hhb_var_dump_append'];
 	// call_user_func_array("var_dump",$args);
 }
+/**
+ * works like var_dump, but returns a string instead of priting it (ob_ based)
+ *
+ * @param mixed $args...
+ * @return string
+ */
 function hhb_return_var_dump(): string // works like var_dump, but returns a string instead of printing it.
 {
 	$args = func_get_args (); // for <5.3.0 support ...
@@ -364,8 +312,16 @@ function hhb_return_var_dump(): string // works like var_dump, but returns a str
 	call_user_func_array ( 'var_dump', $args );
 	return ob_get_clean ();
 }
-;
-function hhb_bin2readable(string $data, int $min_text_len = 3, int $readable_min = 0x40, int $readable_max = 0x7E): string {
+/**
+ * convert a binary string to readable ascii...
+ *
+ * @param string $data
+ * @param int $min_text_len
+ * @param int $readable_min
+ * @param int $readable_max
+ * @return string
+ */
+function hhb_bin2readable(string $data, int $min_text_len = 3, int $readable_min = 0x40, int $readable_max = 0x7E): string { // TODO: better output..
 	$ret = "";
 	$strbuf = "";
 	$i = 0;
@@ -390,6 +346,9 @@ function hhb_bin2readable(string $data, int $min_text_len = 3, int $readable_min
 	$strbuf = "";
 	return $ret;
 }
+/**
+ * enables hhb_exception_handler and hhb_assert_handler and sets error_reporting to max
+ */
 function hhb_init() {
 	static $firstrun = true;
 	if ($firstrun !== true) {
@@ -398,12 +357,12 @@ function hhb_init() {
 	$firstrun = false;
 	error_reporting ( E_ALL );
 	set_error_handler ( "hhb_exception_error_handler" );
-	// ini_set("log_errors",true);
-	// ini_set("display_errors",true);
-	// ini_set("log_errors_max_len",0);
+	// ini_set("log_errors",'On');
+	// ini_set("display_errors",'On');
+	// ini_set("log_errors_max_len",'0');
 	// ini_set("error_prepend_string",'<error>');
 	// ini_set("error_append_string",'</error>'.PHP_EOL);
-	// ini_set("error_log",__DIR__.'/error_log.php');
+	// ini_set("error_log",__DIR__.DIRECTORY_SEPARATOR.'error_log.php.txt');
 	assert_options ( ASSERT_ACTIVE, 1 );
 	assert_options ( ASSERT_WARNING, 0 );
 	assert_options ( ASSERT_QUIET_EVAL, 1 );
@@ -430,17 +389,17 @@ function hhb_combine_filepaths( /*...*/ ):string {
 	foreach ( $args as $arg ) {
 		++ $i;
 		if ($i != 1) {
-			$ret .= '/';
+			$ret .= DIRECTORY_SEPARATOR;
 		}
-		$ret .= str_replace ( "\\", '/', $arg ) . '/';
+		$ret .= str_replace ( (DIRECTORY_SEPARATOR === '/' ? '\\' : '/'), DIRECTORY_SEPARATOR, $arg ) . DIRECTORY_SEPARATOR;
 	}
-	while ( false !== stripos ( $ret, '//' ) ) {
-		$ret = str_replace ( '//', '/', $ret );
+	while ( false !== stripos ( $ret, DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR ) ) {
+		$ret = str_replace ( DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR, DIRECTORY_SEPARATOR, $ret );
 	}
 	if (strlen ( $ret ) < 2) {
-		return $ret; // very edge case scenario, a single / or \ empty
+		return $ret; // edge case: a single DIRECTORY_SEPARATOR empty
 	}
-	if ($ret [strlen ( $ret ) - 1] == '/') {
+	if ($ret [strlen ( $ret ) - 1] === DIRECTORY_SEPARATOR) {
 		$ret = substr ( $ret, 0, - 1 );
 	}
 	return $ret;
@@ -455,18 +414,39 @@ class hhb_curl {
 	protected function truncateFileHandles() {
 		$trun = ftruncate ( $this->response_body_file_handle, 0 );
 		assert ( true === $trun );
+		rewind ( $this->response_body_file_handle );
 		$trun = ftruncate ( $this->response_headers_file_handle, 0 );
 		assert ( true === $trun );
+		rewind ( $this->response_headers_file_handle );
 		// $trun = ftruncate ( $this->request_body_file_handle, 0 );
 		// assert ( true === $trun );
 		$trun = ftruncate ( $this->stderr_file_handle, 0 );
 		assert ( true === $trun );
+		rewind ( $this->stderr_file_handle );
 		return /*true*/;
 	}
-	function _getCurlHandle()/*: curlresource*/ {
+	/**
+	 * returns the internal curl handle
+	 *
+	 * its probably a bad idea to mess with it, you'll probably never want to use this function.
+	 *
+	 * @return resource_curl
+	 */
+	public function _getCurlHandle()/*: curlresource*/ {
 		return $this->curlh;
 	}
-	function _replaceCurl($newcurl, bool $closeold = true) {
+	/**
+	 * replace the internal curl handle with another one...
+	 *
+	 * its probably a bad idea. you'll probably never want to use this function.
+	 *
+	 * @param resource_curl $newcurl
+	 * @param bool $closeold
+	 * @throws InvalidArgumentsException
+	 *
+	 * @return void
+	 */
+	public function _replaceCurl($newcurl, bool $closeold = true) {
 		if (! is_resource ( $newcurl )) {
 			throw new InvalidArgumentsException ( 'parameter 1 must be a curl resource!' );
 		}
@@ -474,15 +454,33 @@ class hhb_curl {
 			throw new InvalidArgumentsException ( 'parameter 1 must be a curl resource!' );
 		}
 		if ($closeold) {
+			if(true){
+				// workaround for https://bugs.php.net/bug.php?id=78007
+				curl_setopt_array( $this->curlh, array(CURLOPT_VERBOSE=>0,CURLOPT_URL=>null));
+				curl_exec($this->curlh);
+			}
 			curl_close ( $this->curlh );
 		}
 		$this->curlh = $newcurl;
 		$this->_prepare_curl ();
 	}
-	static function init(string $url = null): hhb_curl {
-		return new hhb_curl ( $url );
+	/**
+	 * mimics curl_init, using hhb_curl::__construct
+	 *
+	 * @param string $url
+	 * @param bool $insecureAndComfortableByDefault
+	 * @return hhb_curl
+	 */
+	public static function init(string $url = null, bool $insecureAndComfortableByDefault = false): hhb_curl {
+		return new hhb_curl ( $url, $insecureAndComfortableByDefault );
 	}
-	function __construct(string $url = null) {
+	/**
+	 *
+	 * @param string $url
+	 * @param bool $insecureAndComfortableByDefault
+	 * @throws RuntimeException
+	 */
+	function __construct(string $url = null, bool $insecureAndComfortableByDefault = false) {
 		$this->curlh = curl_init ( '' ); // why empty string? PHP Fatal error: Uncaught TypeError: curl_init() expects parameter 1 to be string, null given
 		if (! $this->curlh) {
 			throw new RuntimeException ( 'curl_init failed!' );
@@ -509,15 +507,28 @@ class hhb_curl {
 		$this->stderr_file_handle = $fhandles [3]; // CURLOPT_STDERR
 		unset ( $fhandles );
 		$this->_prepare_curl ();
+		if ($insecureAndComfortableByDefault) {
+			$this->_setComfortableOptions ();
+		}
 	}
 	function __destruct() {
+		if(true){
+			// workaround for https://bugs.php.net/bug.php?id=78007
+			curl_setopt_array( $this->curlh, array(CURLOPT_VERBOSE=>0,CURLOPT_URL=>null));
+			curl_exec($this->curlh);
+		}
 		curl_close ( $this->curlh );
 		fclose ( $this->response_body_file_handle ); // CURLOPT_FILE
 		fclose ( $this->response_headers_file_handle ); // CURLOPT_WRITEHEADER
 		fclose ( $this->request_body_file_handle ); // CURLOPT_INFILE
 		fclose ( $this->stderr_file_handle ); // CURLOPT_STDERR
 	}
-	function _setComfortableOptions() {
+	/**
+	 * sets some insecure, but comfortable settings..
+	 *
+	 * @return self
+	 */
+	public function _setComfortableOptions(): self {
 		$this->setopt_array ( array (
 				CURLOPT_AUTOREFERER => true,
 				CURLOPT_BINARYTRANSFER => true,
@@ -530,20 +541,50 @@ class hhb_curl {
 				CURLOPT_ENCODING => "", // << makes curl post all supported encodings, gzip/deflate/etc, makes transfers faster
 				CURLOPT_USERAGENT => 'hhb_curl_php; curl/' . $this->version () ['version'] . ' (' . $this->version () ['host'] . '); php/' . PHP_VERSION 
 		) ); //
+		return $this;
 	}
-	function errno(): int {
+	/**
+	 * curl_errno — Return the last error number
+	 *
+	 * @return int
+	 */
+	public function errno(): int {
 		return curl_errno ( $this->curlh );
 	}
-	function error(): string {
+	/**
+	 * curl_error — Return a string containing the last error
+	 *
+	 * @return string
+	 */
+	public function error(): string {
 		return curl_error ( $this->curlh );
 	}
-	function escape(string $str): string {
+	/**
+	 * curl_escape — URL encodes the given string
+	 *
+	 * @param string $str
+	 * @return string
+	 */
+	public function escape(string $str): string {
 		return curl_escape ( $this->curlh, $str );
 	}
-	function unescape(string $str): string {
+	/**
+	 * curl_unescape — Decodes the given URL encoded string
+	 *
+	 * @param string $str
+	 * @return string
+	 */
+	public function unescape(string $str): string {
 		return curl_unescape ( $this->curlh, $str );
 	}
-	function exec(string $url = null): bool {
+	/**
+	 * executes the curl request (curl_exec)
+	 *
+	 * @param string $url
+	 * @throws RuntimeException
+	 * @return self
+	 */
+	public function exec(string $url = null): self {
 		$this->truncateFileHandles ();
 		// WARNING: some weird error where curl will fill up the file again with 00's when the file has been truncated
 		// until it is the same size as it was before truncating, then keep appending...
@@ -556,38 +597,78 @@ class hhb_curl {
 		if ($this->errno ()) {
 			throw new RuntimeException ( 'curl_exec failed. errno: ' . var_export ( $this->errno (), true ) . ' error: ' . var_export ( $this->error (), true ) );
 		}
-		return $ret;
+		return $this;
 	}
-	function file_create(string $filename, string $mimetype = null, string $postname = null): CURLFile {
+	/**
+	 * Create a CURLFile object for use with CURLOPT_POSTFIELDS
+	 *
+	 * @param string $filename
+	 * @param string $mimetype
+	 * @param string $postname
+	 * @return CURLFile
+	 */
+	public function file_create(string $filename, string $mimetype = null, string $postname = null): CURLFile {
 		return curl_file_create ( $filename, $mimetype, $postname );
 	}
-	function getinfo(int $opt) {
+	/**
+	 * Get information regarding the last transfer
+	 *
+	 * @param int $opt
+	 * @return mixed
+	 */
+	public function getinfo(int $opt = null) {
 		return curl_getinfo ( $this->curlh, $opt );
 	}
-	function pause(int $bitmask): int {
+	// pause is explicitly undocumented for now, but it pauses a running transfer
+	public function pause(int $bitmask): int {
 		return curl_pause ( $this->curlh, $bitmask );
 	}
-	function reset() {
+	/**
+	 * Reset all options
+	 */
+	public function reset(): self {
 		curl_reset ( $this->curlh );
 		$this->curloptions = [ ];
 		$this->_prepare_curl ();
+		return $this;
 	}
-	function setopt_array(array $options): bool {
+	/**
+	 * curl_setopt_array — Set multiple options for a cURL transfer
+	 *
+	 * @param array $options
+	 * @throws InvalidArgumentException
+	 * @return self
+	 */
+	public function setopt_array(array $options): self {
 		foreach ( $options as $option => $value ) {
 			$this->setopt ( $option, $value );
 		}
-		return true;
+		return $this;
 	}
-	function getResponseBody(): string {
+	/**
+	 * gets the last response body
+	 *
+	 * @return string
+	 */
+	public function getResponseBody(): string {
 		return file_get_contents ( stream_get_meta_data ( $this->response_body_file_handle ) ['uri'] );
 	}
-	//
-	function getResponseHeaders(): array {
+	/**
+	 * returns the response headers of the last request (when auto-following Location-redirect, only the last headers are returned)
+	 *
+	 * @return string[]
+	 */
+	public function getResponseHeaders(): array {
 		$text = file_get_contents ( stream_get_meta_data ( $this->response_headers_file_handle ) ['uri'] );
 		// ...
 		return $this->splitHeaders ( $text );
 	}
-	function getResponsesHeaders(): array {
+	/**
+	 * gets the response headers of all the requets for the last execution (including any Location-redirect autofollow headers)
+	 *
+	 * @return string[][]
+	 */
+	public function getResponsesHeaders(): array {
 		// var_dump($this->getStdErr());die();
 		// CONSIDER https://bugs.php.net/bug.php?id=65348
 		$Cr = "\x0d";
@@ -598,6 +679,10 @@ class hhb_curl {
 		while ( FALSE !== ($startPos = strpos ( $stderr, $Lf . '<' )) ) {
 			$stderr = substr ( $stderr, $startPos + strlen ( $Lf ) );
 			$endPos = strpos ( $stderr, $CrLf . "<\x20" . $CrLf );
+			if ($endPos === false) {
+				// ofc, curl has ths quirk where the specific message "* HTTP error before end of send, stop sending" gets appended with LF instead of the usual CRLF for other messages...
+				$endPos = strpos ( $stderr, $Lf . "<\x20" . $CrLf );
+			}
 			// var_dump(bin2hex(substr($stderr,279,30)),$endPos);die("HEX");
 			// var_dump($stderr,$endPos);die("PAIN");
 			assert ( $endPos !== FALSE ); // should always be more after this with CURLOPT_VERBOSE.. (connection left intact / connecton dropped /whatever)
@@ -630,7 +715,12 @@ class hhb_curl {
 		return $responses;
 	}
 	// we COULD have a getResponsesCookies too...
-	function getResponseCookies(): array {
+	/*
+	 * get last response cookies
+	 *
+	 * @return string[]
+	 */
+	public function getResponseCookies(): array {
 		$headers = $this->getResponsesHeaders ();
 		$headers_merged = array ();
 		foreach ( $headers as $headers2 ) {
@@ -640,11 +730,16 @@ class hhb_curl {
 		}
 		return $this->parseCookies ( $headers_merged );
 	}
-	function getRequestBody(): string {
+	// explicitly undocumented for now..
+	public function getRequestBody(): string {
 		return file_get_contents ( stream_get_meta_data ( $this->request_body_file_handle ) ['uri'] );
 	}
-	// gets the headers of the LAST request..
-	function getRequestHeaders(): array {
+	/**
+	 * return headers of last execution
+	 *
+	 * @return string[]
+	 */
+	public function getRequestHeaders(): array {
 		$requestsHeaders = $this->getRequestsHeaders ();
 		$requestCount = count ( $requestsHeaders );
 		if ($requestCount === 0) {
@@ -653,7 +748,12 @@ class hhb_curl {
 		return $requestsHeaders [$requestCount - 1];
 	}
 	// array(0=>array(request1_headers),1=>array(requst2_headers),2=>array(request3_headers))~
-	function getRequestsHeaders(): array {
+	/**
+	 * get last execution request headers
+	 *
+	 * @return string[]
+	 */
+	public function getRequestsHeaders(): array {
 		// CONSIDER https://bugs.php.net/bug.php?id=65348
 		$Cr = "\x0d";
 		$Lf = "\x0a";
@@ -663,6 +763,10 @@ class hhb_curl {
 		while ( FALSE !== ($startPos = strpos ( $stderr, $Lf . '>' )) ) {
 			$stderr = substr ( $stderr, $startPos + strlen ( $Lf . '>' ) );
 			$endPos = strpos ( $stderr, $CrLf . $CrLf );
+			if ($endPos === false) {
+				// ofc, curl has ths quirk where the specific message "* HTTP error before end of send, stop sending" gets appended with LF instead of the usual CRLF for other messages...
+				$endPos = strpos ( $stderr, $Lf . $CrLf );
+			}
 			assert ( $endPos !== FALSE ); // should always be more after this with CURLOPT_VERBOSE.. (connection left intact / connecton dropped /whatever)
 			$headers = substr ( $stderr, 0, $endPos );
 			$stderr = substr ( $stderr, $endPos + strlen ( $CrLf . $CrLf ) );
@@ -679,14 +783,28 @@ class hhb_curl {
 		unset ( $headers, $key, $val, $endPos, $startPos );
 		return $requests;
 	}
-	function getRequestCookies(): array {
+	/**
+	 * return last execution request cookies
+	 *
+	 * @return string[]
+	 */
+	public function getRequestCookies(): array {
 		return $this->parseCookies ( $this->getRequestHeaders () );
 	}
-	function getStdErr(): string {
+	/**
+	 * get everything curl wrote to stderr of the last execution
+	 *
+	 * @return string
+	 */
+	public function getStdErr(): string {
 		return file_get_contents ( stream_get_meta_data ( $this->stderr_file_handle ) ['uri'] );
 	}
-	function getStdOut(): string {
-		// alias..
+	/**
+	 * alias of getResponseBody
+	 *
+	 * @return string
+	 */
+	public function getStdOut(): string {
 		return $this->getResponseBody ();
 	}
 	protected function splitHeaders(string $headerstring): array {
@@ -753,7 +871,15 @@ class hhb_curl {
 		unset ( $header, $cookiename, $thepos );
 		return $returnCookies;
 	}
-	function setopt(int $option, $value): bool {
+	/**
+	 * Set an option for curl
+	 *
+	 * @param int $option
+	 * @param mixed $value
+	 * @throws InvalidArgumentException
+	 * @return self
+	 */
+	public function setopt(int $option, $value): self {
 		switch ($option) {
 			case CURLOPT_VERBOSE :
 				{
@@ -802,28 +928,58 @@ class hhb_curl {
 		}
 		return $this->_setopt ( $option, $value );
 	}
-	private function _setopt($option, $value): bool {
+	/**
+	 *
+	 * @param int $option
+	 * @param unknown $value
+	 * @throws InvalidArgumentException
+	 * @return self
+	 */
+	protected function _setopt(int $option, $value): self {
 		$ret = curl_setopt ( $this->curlh, $option, $value );
 		if (! $ret) {
 			throw new InvalidArgumentException ( 'curl_setopt failed. errno: ' . $this->errno () . '. error: ' . $this->error () . '. option: ' . var_export ( $this->_curlopt_name ( $option ), true ) . ' (' . var_export ( $option, true ) . '). value: ' . var_export ( $value, true ) );
 		}
-		$curloptions [$option] = $value;
-		return $ret; // true...
+		$this->curloptions [$option] = $value;
+		return $this;
 	}
-	function getopt(int $option) {
+	/**
+	 * return an option previously given to setopt(_array)
+	 *
+	 * @param int $option
+	 * @param bool $isset
+	 * @return mixed|NULL
+	 */
+	public function getopt(int $option, bool &$isset = NULL) {
 		if (array_key_exists ( $option, $this->curloptions )) {
+			$isset = true;
 			return $this->curloptions [$option];
 		} else {
-			return NULL; // is this indistinguishable from an option actually containing NULL? yes, yes it is.
+			$isset = false;
+			return NULL;
 		}
 	}
-	function strerror(int $errornum): string {
+	/**
+	 * return a string representation of the given curl error code
+	 *
+	 * (ps, most of the time you'll probably want to use error() instead of strerror())
+	 *
+	 * @param int $errornum
+	 * @return string
+	 */
+	public function strerror(int $errornum): string {
 		return curl_strerror ( $errornum );
 	}
-	function version(int $age = CURLVERSION_NOW): array {
-		return curl_version ( $age );
+	/**
+	 * gets cURL version information
+	 *
+	 * @param @deprecated int $age
+	 * @return array
+	 */
+	public function version(int $age = CURLVERSION_NOW): array {
+		return curl_version ();
 	}
-	private function _prepare_curl() {
+	protected function _prepare_curl() {
 		$this->truncateFileHandles ();
 		$this->_setopt ( CURLOPT_FILE, $this->response_body_file_handle ); // CURLOPT_FILE
 		$this->_setopt ( CURLOPT_WRITEHEADER, $this->response_headers_file_handle ); // CURLOPT_WRITEHEADER
@@ -831,7 +987,15 @@ class hhb_curl {
 		$this->_setopt ( CURLOPT_STDERR, $this->stderr_file_handle ); // CURLOPT_STDERR
 		$this->_setopt ( CURLOPT_VERBOSE, true );
 	}
-	function _curlopt_name(int $option)/*:mixed(string|false)*/{
+	/**
+	 * gets the constants name of the given curl options
+	 *
+	 * useful for error messages (instead of "FAILED TO SET CURLOPT 21387" , you can say "FAILED TO SET CURLOPT_VERBOSE" )
+	 *
+	 * @param int $option
+	 * @return mixed|boolean
+	 */
+	public function _curlopt_name(int $option)/*:mixed(string|false)*/{
 		// thanks to TML for the get_defined_constants trick..
 		// <TML> If you had some specific reason for doing it with your current approach (which is, to me, approaching the problem completely backwards - "I dug a hole! How do I get out!"), it seems that your entire function there could be replaced with: return array_flip(get_defined_constants(true)['curl']);
 		$curldefs = array_flip ( get_defined_constants ( true ) ['curl'] );
@@ -841,7 +1005,15 @@ class hhb_curl {
 			return false;
 		}
 	}
-	function _curlopt_number(string $option)/*:mixed(int|false)*/{
+	/**
+	 * gets the constant number of the given constant name
+	 *
+	 * (what was i thinking!?)
+	 *
+	 * @param string $option
+	 * @return int|boolean
+	 */
+	public function _curlopt_number(string $option)/*:mixed(int|false)*/{
 		// thanks to TML for the get_defined_constants trick..
 		$curldefs = get_defined_constants ( true ) ['curl'];
 		if (isset ( $curldefs [$option] )) {
@@ -850,4 +1022,257 @@ class hhb_curl {
 			return false;
 		}
 	}
+}
+class hhb_bcmath {
+	public $scale = 200;
+	public function __construct(int $scale = 200) {
+		$this->scale = $scale;
+	}
+	public function add(string $left_operand, string $right_operand, int $scale = NULL): string {
+		$scale = $scale ?? $this->scale;
+		$ret = bcadd ( $left_operand, $right_operand, $scale );
+		return $this->bctrim ( $ret );
+	}
+	public function comp(string $left_operand, string $right_operand, int $scale = NULL): int {
+		$scale = $scale ?? $this->scale;
+		$ret = bccomp ( $left_operand, $right_operand, $scale );
+		return $ret;
+	}
+	public function div(string $left_operand, string $right_operand, int $scale = NULL): string {
+		$scale = $scale ?? $this->scale;
+		$right_operand = $this->bctrim ( trim ( $right_operand ) );
+		if ($right_operand === '0') {
+			throw new DivisionByZeroError ();
+		}
+		$ret = bcdiv ( $left_operand, $right_operand, $scale );
+		return $this->bctrim ( $ret );
+	}
+	public function mod(string $left_operand, string $modulus): string {
+		$scale = $scale ?? $this->scale;
+		$modulus = $this->bctrim ( trim ( $modulus ) );
+		if ($modulus === '0') {
+			// if there was a ModulusByZero error, i would use it
+			throw new DivisionByZeroError ();
+		}
+		$ret = bcmod ( $left_operand, $modulus );
+		return $this->bctrim ( $ret );
+	}
+	public function mul(string $left_operand, string $right_operand, int $scale = NULL): string {
+		$scale = $scale ?? $this->scale;
+		$ret = bcmul ( $left_operand, $right_operand, $scale );
+		return $this->bctrim ( $ret );
+	}
+	public function pow(string $left_operand, string $right_operand, int $scale = NULL): string {
+		$scale = $scale ?? $this->scale;
+		$ret = bcpow ( $left_operand, $right_operand, $scale );
+		return $this->bctrim ( $ret );
+	}
+	public function powmod(string $left_operand, string $right_operand, string $modulus, int $scale = NULL): string {
+		$scale = $scale ?? $this->scale;
+		$modulus = $this->bctrim ( trim ( $modulus ) );
+		if ($modulus === '0') {
+			// if there was a ModulusByZero error, i would use it
+			throw new DivisionByZeroError ();
+		}
+		$ret = bcpowmod ( $left_operand, $modulus, $modulus, $scale );
+		return $this->bctrim ( $ret );
+	}
+	public function scale(int $scale): bool {
+		$this->scale = $scale;
+		return true;
+	}
+	public function sqrt(string $operand, int $scale = NULL) {
+		$scale = $scale ?? $this->scale;
+		if (bccomp ( $operand, '-1' ) !== - 1) {
+			throw new RangeException ( 'tried to get the square root of number below zero!' );
+		}
+		$ret = bcsqrt ( $left_operand, $scale );
+		return $this->bctrim ( $ret );
+	}
+	public function sub(string $left_operand, string $right_operand, int $scale = NULL): string {
+		$scale = $scale ?? $this->scale;
+		$ret = bcsub ( $left_operand, $right_operand, $scale );
+		return $this->bctrim ( $ret );
+	}
+	public static function bctrim(string $str): string {
+		$str = trim ( $str );
+		if (false === strpos ( $str, '.' )) {
+			return $str;
+		}
+		$str = rtrim ( $str, '0' );
+		if ($str [strlen ( $str ) - 1] === '.') {
+			$str = substr ( $str, 0, - 1 );
+		}
+		return $str;
+	}
+}
+
+/**
+ * needInputVariables: easy way to require variables, give a http 400 Bad Request with good error reports on missing parameters,
+ * and cast the variables to the correct native php type (i use it with extract(needInputVariables(['mail_to'=>'email','i'=>'int','foo'=>'bool','bar','P'])) )
+ *
+ * @param array $variables
+ *        	variables that you require. if key is numeric, any type is accepted, and name is taken from value, otherwise name is taken from key and type is taken from variable.
+ * @param string $inputSources
+ *        	G=$_GET P=$_POST C=$_COOKIE A=$argv (not yet implemented) X=$customSources, and variables are extracted in the order given here.
+ * @param array $customSources
+ *        	(otional)
+ *        	array of custom sources to look through - ignored unless $inputSources contains X.
+ * @throws \LogicException
+ * @throws \InvalidArgumentException
+ * @throws \RuntimeException
+ * @return array
+ */
+function needInputVariables(array $variables, string $inputSources = 'P', array $customSources = array(), bool $exceptionMode = false): array {
+	$ret = array ();
+	$errors = array ();
+	foreach ( $variables as $key => $type ) {
+		if (is_numeric ( $key )) {
+			$key = $type;
+			$type = ''; // anything
+		}
+		// X (Custom)
+		$found = false;
+		foreach ( str_split ( $inputSources ) as $source ) {
+			switch ($source) {
+				case 'G' : // $_GET
+					{
+						if (array_key_exists ( $key, $_GET )) {
+							$found = true;
+							$val = $_GET [$key];
+							break 2;
+						}
+						break;
+					}
+				case 'P' : // $_POST
+					{
+						if (array_key_exists ( $key, $_POST )) {
+							$found = true;
+							$val = $_POST [$key];
+							break 2;
+						}
+						break;
+					}
+				case 'C' : // $_COOKIE
+					{
+						if (array_key_exists ( $key, $_COOKIE )) {
+							$found = true;
+							$val = $_COOKIE [$key];
+							break 2;
+						}
+						break;
+					}
+				case 'A' : // $argv
+					{
+						throw new \LogicException ( 'FIXME: $argv NOT YET IMPLEMENTED' );
+					}
+				case 'X' : // $customSources
+					{
+						foreach ( $customSources as $customSource ) {
+							if (array_key_exists ( $key, $customSource )) {
+								$found = true;
+								$val = $customSource [$key];
+								break 3;
+							}
+						}
+						break;
+					}
+				default :
+					{
+						throw new \InvalidArgumentException ( 'unknown input source: ' . hhb_return_var_dump ( $source ) );
+					}
+			}
+		}
+		
+		if (! $found) {
+			$errors [] = 'missing parameter: ' . $key;
+			continue;
+		}
+		if ($type === '') {
+			// anything, pass
+		} elseif (substr ( $type, 0, 6 ) === 'string') {
+			if (! is_string ( $val )) {
+				$errors [] = 'following parameter is not a string: ' . $key;
+				continue;
+			}
+			$type = substr ( $type, 6 );
+			if (strlen ( $type )) {
+				if ($type [0] !== '(') {
+					throw \InvalidArgumentException ();
+				}
+				preg_match ( '/(\d+)(?:\,(\d+))?/', $type, $matches );
+				$c = count ( $matches );
+				if ($c > 3) {
+					throw new \InvalidArgumentException ();
+				}
+				if ($c > 2) {
+					$maxLen = $matches [2];
+					if (strlen ( $val ) > $maxLen) {
+						$errors [] = 'following parameter cannot be longer than ' . $maxLen . ' byte(s): ' . $key;
+						continue;
+					}
+				}
+				if ($c > 1) {
+					$minLen = $matches [1];
+					if (strlen ( $val ) < $minLen) {
+						$errors [] = 'following parameter must be at least ' . $minLen . ' byte(s): ' . $key;
+						continue;
+					}
+				}
+			}
+		} elseif ($type === 'bool') {
+			$val = filter_var ( $val, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
+			if (NULL === $val) {
+				$errors [] = 'following parameter is not a bool: ' . $key;
+			}
+		} elseif ($type === 'int' || $type === 'integer') {
+			$val = filter_var ( $val, FILTER_VALIDATE_INT );
+			if (false === $val) {
+				$errors [] = 'following parameter is not a integer: ' . $key;
+			}
+		} elseif ($type === 'float' || $type === 'double') {
+			$val = filter_var ( $val, FILTER_VALIDATE_FLOAT );
+			if (false === $val) {
+				$errors [] = 'following parameter is not a float: ' . $key;
+			}
+		} elseif ($type === 'email') {
+			$val = filter_var ( $val, FILTER_VALIDATE_EMAIL, (defined ( 'FILTER_FLAG_EMAIL_UNICODE' ) ? FILTER_FLAG_EMAIL_UNICODE : 0) );
+			if (false === $val) {
+				$errors [] = 'following parameter is not an email: ' . $key;
+			}
+		} elseif ($type === 'ip') {
+			$val = filter_var ( $val, FILTER_VALIDATE_IP );
+			if (false === $val) {
+				$errors [] = 'following parameter is not an ip address: ' . $key;
+			}
+		} elseif (is_callable ( $type )) {
+			$req = (new ReflectionFunction ( $type ))->getNumberOfRequiredParameters ();
+			if ($req === 1) {
+				$ret [$key] = $type ( $val );
+			} elseif ($req === 2) {
+				$errstr = '';
+				$ret [$key] = $type ( $val, $errstr );
+				if (! empty ( $errstr )) {
+					$error [] = "parameter \"$key\": $errstr";
+				}
+			} else {
+				throw new \InvalidArgumentException ( "callback validator must accept 1 or 2 parameters, but accepts \"$req\" parameters. (\$input[,&\$errorDescription]){...return \$input}" );
+			}
+			continue;
+		} else {
+			throw new \InvalidArgumentException ( 'unsupported type: ' . hhb_return_var_dump ( $type ) );
+		}
+		$ret [$key] = $val;
+	}
+	if (empty ( $errors )) {
+		return $ret;
+	}
+	$errstr = json_encode ( $errors, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PARTIAL_OUTPUT_ON_ERROR | (defined ( 'JSON_UNESCAPED_LINE_TERMINATORS' ) ? JSON_UNESCAPED_LINE_TERMINATORS : 0) );
+	if ($exceptionMode) {
+		throw new \RuntimeException ( $errstr );
+	}
+	http_response_code ( 400 );
+	header ( "content-type: text/plain;charset=utf8" );
+	echo "HTTP 400 Bad Request: following errors were found: \n";
+	die ( $errstr );
 }
