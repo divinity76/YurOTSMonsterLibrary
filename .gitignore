@@ -3,4 +3,4 @@ ImageThumbnailURLCache.json
 .settings/*
 .buildpath
 .project
-
+/data

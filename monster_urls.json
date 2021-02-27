@@ -1,0 +1,802 @@
+{
+    "Yeti": {
+        "monster_name": "Yeti",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/e/e9/Yeti.gif/revision/latest?cb=20050501014853&path-prefix=en"
+    },
+    "Xarptor": {
+        "monster_name": "Xarptor",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Wolf": {
+        "monster_name": "Wolf",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/8/82/Wolf.gif/revision/latest?cb=20150418080112&path-prefix=en"
+    },
+    "Witch": {
+        "monster_name": "Witch",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/a/ae/Witch.gif/revision/latest?cb=20060327035711&path-prefix=en"
+    },
+    "Winter Wolf": {
+        "monster_name": "Winter Wolf",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/6/6d/Winter_Wolf.gif/revision/latest?cb=20150418080103&path-prefix=en"
+    },
+    "Winged Dragon Of Ra": {
+        "monster_name": "Winged Dragon Of Ra",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Wild Warrior": {
+        "monster_name": "Wild Warrior",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/2/22/Wild_Warrior.gif/revision/latest?cb=20060830025522&path-prefix=en"
+    },
+    "Wasp": {
+        "monster_name": "Wasp",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/d/d7/Wasp.gif/revision/latest?cb=20140827160255&path-prefix=en"
+    },
+    "Warlock": {
+        "monster_name": "Warlock",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/e/e0/Warlock.gif/revision/latest?cb=20060810013953&path-prefix=en"
+    },
+    "War Wolf": {
+        "monster_name": "War Wolf",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/a/a4/War_Wolf.gif/revision/latest?cb=20150710113654&path-prefix=en"
+    },
+    "War Troll": {
+        "monster_name": "War Troll",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Walking Tree": {
+        "monster_name": "Walking Tree",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Vertex": {
+        "monster_name": "Vertex",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Vashresamun": {
+        "monster_name": "Vashresamun",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/4/4b/Vashresamun.gif/revision/latest?cb=20060901022430&path-prefix=en"
+    },
+    "Vampire": {
+        "monster_name": "Vampire",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/0/0b/Vampire.gif/revision/latest?cb=20090813055104&path-prefix=en"
+    },
+    "Valkyrie": {
+        "monster_name": "Valkyrie",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/f/f5/Valkyrie.gif/revision/latest?cb=20060810014114&path-prefix=en"
+    },
+    "Uglo": {
+        "monster_name": "Uglo",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Troll": {
+        "monster_name": "Troll",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/1/11/Troll.gif/revision/latest?cb=20141110203007&path-prefix=en"
+    },
+    "Train Monk": {
+        "monster_name": "Train Monk",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Tiger": {
+        "monster_name": "Tiger",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/c/ce/Tiger.gif/revision/latest?cb=20150418080056&path-prefix=en"
+    },
+    "The Old Widow": {
+        "monster_name": "The Old Widow",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/4/42/The_Old_Widow.gif/revision/latest?cb=20050819175524&path-prefix=en"
+    },
+    "Thalas": {
+        "monster_name": "Thalas",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/a/a9/Thalas.gif/revision/latest?cb=20060901022151&path-prefix=en"
+    },
+    "Terror Bird": {
+        "monster_name": "Terror Bird",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/1/16/Terror_Bird.gif/revision/latest?cb=20070906223515&path-prefix=en"
+    },
+    "Tarantula": {
+        "monster_name": "Tarantula",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/4/47/Tarantula.gif/revision/latest?cb=20150422152827&path-prefix=en"
+    },
+    "Swamp Troll": {
+        "monster_name": "Swamp Troll",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/b/bf/Swamp_Troll.gif/revision/latest?cb=20150418080038&path-prefix=en"
+    },
+    "Surphyre": {
+        "monster_name": "Surphyre",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Succubus": {
+        "monster_name": "Succubus",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Strillerlo": {
+        "monster_name": "Strillerlo",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Stone Golem": {
+        "monster_name": "Stone Golem",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/8/83/Stone_Golem.gif/revision/latest?cb=20070712031532&path-prefix=en"
+    },
+    "Stalker": {
+        "monster_name": "Stalker",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/b/b9/Stalker.gif/revision/latest?cb=20070906222743&path-prefix=en"
+    },
+    "Spit Nettle": {
+        "monster_name": "Spit Nettle",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/8/83/Spit_Nettle.gif/revision/latest?cb=20060901200524&path-prefix=en"
+    },
+    "Spider": {
+        "monster_name": "Spider",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/9/9f/Spider.gif/revision/latest?cb=20140827160121&path-prefix=en"
+    },
+    "Snake": {
+        "monster_name": "Snake",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/3/32/Snake.gif/revision/latest?cb=20150416141150&path-prefix=en"
+    },
+    "Smuggler": {
+        "monster_name": "Smuggler",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/0/0c/Smuggler.gif/revision/latest?cb=20060810013546&path-prefix=en"
+    },
+    "Slime": {
+        "monster_name": "Slime",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/8/82/Slime.gif/revision/latest?cb=20150416135606&path-prefix=en"
+    },
+    "Skunk": {
+        "monster_name": "Skunk",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/8/82/Skunk.gif/revision/latest?cb=20150418080031&path-prefix=en"
+    },
+    "Skeleton": {
+        "monster_name": "Skeleton",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/7/72/Skeleton.gif/revision/latest?cb=20150421144011&path-prefix=en"
+    },
+    "Sibang": {
+        "monster_name": "Sibang",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/4/42/Sibang.gif/revision/latest?cb=20061126202143&path-prefix=en"
+    },
+    "Sheep": {
+        "monster_name": "Sheep",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/2/2b/Sheep.gif/revision/latest?cb=20150130111059&path-prefix=en"
+    },
+    "Scylla": {
+        "monster_name": "Scylla",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Scorpion": {
+        "monster_name": "Scorpion",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/f/f9/Scorpion.gif/revision/latest?cb=20050529042055&path-prefix=en"
+    },
+    "Scarab": {
+        "monster_name": "Scarab",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/e/e7/Scarab.gif/revision/latest?cb=20050501022729&path-prefix=en"
+    },
+    "Scalpthor": {
+        "monster_name": "Scalpthor",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Rotworm": {
+        "monster_name": "Rotworm",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/b/b9/Rotworm.gif/revision/latest?cb=20141110210311&path-prefix=en"
+    },
+    "Red Butterfly": {
+        "monster_name": "Red Butterfly",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Rat": {
+        "monster_name": "Rat",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/a/af/Rat.gif/revision/latest?cb=20141110204448&path-prefix=en"
+    },
+    "Raptor Troll": {
+        "monster_name": "Raptor Troll",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Rape Ape": {
+        "monster_name": "Rape Ape",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Rahemos": {
+        "monster_name": "Rahemos",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/b/b7/Rahemos.gif/revision/latest?cb=20060901022518&path-prefix=en"
+    },
+    "Rabbit": {
+        "monster_name": "Rabbit",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/b/b1/Rabbit.gif/revision/latest?cb=20150421143607&path-prefix=en"
+    },
+    "Priestess": {
+        "monster_name": "Priestess",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/1/15/Priestess.gif/revision/latest?cb=20070712030955&path-prefix=en"
+    },
+    "Polar Bear": {
+        "monster_name": "Polar Bear",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/e/e2/Polar_Bear.gif/revision/latest?cb=20150418075921&path-prefix=en"
+    },
+    "Poison Spider": {
+        "monster_name": "Poison Spider",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/d/de/Poison_Spider.gif/revision/latest?cb=20140823213336&path-prefix=en"
+    },
+    "Plutonex": {
+        "monster_name": "Plutonex",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Pimp Daddy 3000": {
+        "monster_name": "Pimp Daddy 3000",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Pig": {
+        "monster_name": "Pig",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/8/8d/Pig.gif/revision/latest?cb=20150422152819&path-prefix=en"
+    },
+    "Panda": {
+        "monster_name": "Panda",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/6/64/Panda.gif/revision/latest?cb=20150418075837&path-prefix=en"
+    },
+    "Oxidian": {
+        "monster_name": "Oxidian",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Osiris": {
+        "monster_name": "Osiris",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Orshabaal": {
+        "monster_name": "Orshabaal",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/c/ce/Orshabaal.gif/revision/latest?cb=20070712215147&path-prefix=en"
+    },
+    "Orc Warrior": {
+        "monster_name": "Orc Warrior",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/9/94/Orc_Warrior.gif/revision/latest?cb=20050529215121&path-prefix=en"
+    },
+    "Orc Warlord": {
+        "monster_name": "Orc Warlord",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/4/44/Orc_Warlord.gif/revision/latest?cb=20070712031335&path-prefix=en"
+    },
+    "Orc Spearman": {
+        "monster_name": "Orc Spearman",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/c/ca/Orc_Spearman.gif/revision/latest?cb=20150422152810&path-prefix=en"
+    },
+    "Orc Shaman": {
+        "monster_name": "Orc Shaman",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/9/9f/Orc_Shaman.gif/revision/latest?cb=20141110201744&path-prefix=en"
+    },
+    "Orc Rider": {
+        "monster_name": "Orc Rider",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/3/3a/Orc_Rider.gif/revision/latest?cb=20070906223222&path-prefix=en"
+    },
+    "Orc Leader": {
+        "monster_name": "Orc Leader",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/0/0e/Orc_Leader.gif/revision/latest?cb=20070712030519&path-prefix=en"
+    },
+    "Orc Berserker": {
+        "monster_name": "Orc Berserker",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/1/16/Orc_Berserker.gif/revision/latest?cb=20141110202321&path-prefix=en"
+    },
+    "Orc": {
+        "monster_name": "Orc",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/2/21/Orc.gif/revision/latest?cb=20150418075826&path-prefix=en"
+    },
+    "Omruc": {
+        "monster_name": "Omruc",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/f/fd/Omruc.gif/revision/latest?cb=20060901022009&path-prefix=en"
+    },
+    "Obama The Nigger": {
+        "monster_name": "Obama The Nigger",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Necropharus": {
+        "monster_name": "Necropharus",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/e/e9/Necropharus.png/revision/latest/scale-to-width-down/212?cb=20100415214820&path-prefix=en"
+    },
+    "Necromancer": {
+        "monster_name": "Necromancer",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/7/73/Necromancer.gif/revision/latest?cb=20050601234741&path-prefix=en"
+    },
+    "Mutant Orc": {
+        "monster_name": "Mutant Orc",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Murius": {
+        "monster_name": "Murius",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/0/0b/General_Murius.gif/revision/latest?cb=20140816102304&path-prefix=en"
+    },
+    "Mummy": {
+        "monster_name": "Mummy",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/d/dd/Mummy.gif/revision/latest?cb=20050530204715&path-prefix=en"
+    },
+    "Muhammed C4 Daddy": {
+        "monster_name": "Muhammed C4 Daddy",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Morguthis": {
+        "monster_name": "Morguthis",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/5/59/Morguthis.jpg/revision/latest/scale-to-width-down/212?cb=20070116173525&path-prefix=en"
+    },
+    "Morgaroth": {
+        "monster_name": "Morgaroth",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/c/c5/Morgaroth.jpg/revision/latest/scale-to-width-down/212?cb=20080326133706&path-prefix=en"
+    },
+    "Monk": {
+        "monster_name": "Monk",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/c/cc/Monk.gif/revision/latest?cb=20050601043300&path-prefix=en"
+    },
+    "Mongol": {
+        "monster_name": "Mongol",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Minotaur Mage": {
+        "monster_name": "Minotaur Mage",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/f/f6/Minotaur_Mage.gif/revision/latest?cb=20141110205457&path-prefix=en"
+    },
+    "Minotaur Guard": {
+        "monster_name": "Minotaur Guard",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/e/e9/Minotaur_Guard.gif/revision/latest?cb=20070712032235&path-prefix=en"
+    },
+    "Minotaur Archer": {
+        "monster_name": "Minotaur Archer",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/9/9d/Minotaur_Archer.gif/revision/latest?cb=20150416140717&path-prefix=en"
+    },
+    "Minotaur": {
+        "monster_name": "Minotaur",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/9/95/Minotaur.gif/revision/latest?cb=20141110205934&path-prefix=en"
+    },
+    "Mikrionez": {
+        "monster_name": "Mikrionez",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Merlkin": {
+        "monster_name": "Merlkin",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/c/ca/Merlkin.gif/revision/latest?cb=20080711190444&path-prefix=en"
+    },
+    "Matlock": {
+        "monster_name": "Matlock",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Marid": {
+        "monster_name": "Marid",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/a/a1/Marid.gif/revision/latest?cb=20050601213801&path-prefix=en"
+    },
+    "Mahrdis": {
+        "monster_name": "Mahrdis",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/b/b1/Mahrdis.gif/revision/latest?cb=20060901022600&path-prefix=en"
+    },
+    "Mad Cow": {
+        "monster_name": "Mad Cow",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Lizard Templar": {
+        "monster_name": "Lizard Templar",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/4/4e/Lizard_Templar.gif/revision/latest?cb=20080711190551&path-prefix=en"
+    },
+    "Lizard Snakecharmer": {
+        "monster_name": "Lizard Snakecharmer",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/0/05/Lizard_Snakecharmer.gif/revision/latest?cb=20080629132347&path-prefix=en"
+    },
+    "Lizard Sentinel": {
+        "monster_name": "Lizard Sentinel",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/8/88/Lizard_Sentinel.gif/revision/latest?cb=20080711190357&path-prefix=en"
+    },
+    "Lion": {
+        "monster_name": "Lion",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/0/07/Lion.gif/revision/latest?cb=20150418075806&path-prefix=en"
+    },
+    "Lich": {
+        "monster_name": "Lich",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/5/5c/Lich.gif/revision/latest?cb=20050602031527&path-prefix=en"
+    },
+    "Larva": {
+        "monster_name": "Larva",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/4/4f/Larva.gif/revision/latest?cb=20150418075750&path-prefix=en"
+    },
+    "Krampus": {
+        "monster_name": "Krampus",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Kraktor": {
+        "monster_name": "Kraktor",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Kongra": {
+        "monster_name": "Kongra",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/3/30/Kongra.gif/revision/latest?cb=20070712030548&path-prefix=en"
+    },
+    "King Yetiroth": {
+        "monster_name": "King Yetiroth",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "King Arthur": {
+        "monster_name": "King Arthur",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Jynkky Hanuri Joel": {
+        "monster_name": "Jynkky Hanuri Joel",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Hydra": {
+        "monster_name": "Hydra",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/1/19/Hydra.gif/revision/latest?cb=20060323064833&path-prefix=en"
+    },
+    "Hybrid": {
+        "monster_name": "Hybrid",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Hyaena": {
+        "monster_name": "Hyaena",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/9/94/Hyaena.gif/revision/latest?cb=20150418075723&path-prefix=en"
+    },
+    "Hunter": {
+        "monster_name": "Hunter",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/e/e9/Hunter.gif/revision/latest?cb=20061109182750&path-prefix=en"
+    },
+    "Humongous Beetle": {
+        "monster_name": "Humongous Beetle",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "House Elf": {
+        "monster_name": "House Elf",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Holy Knight": {
+        "monster_name": "Holy Knight",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Hero": {
+        "monster_name": "Hero",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/2/26/Hero.jpg/revision/latest?cb=20070822131949&path-prefix=en"
+    },
+    "Hamster": {
+        "monster_name": "Hamster",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/4/4f/Hamster_in_a_Wheel.gif/revision/latest?cb=20160415192743&path-prefix=en"
+    },
+    "Gustaf The Fat Lady": {
+        "monster_name": "Gustaf The Fat Lady",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Gryphon": {
+        "monster_name": "Gryphon",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Grorlam": {
+        "monster_name": "Grorlam",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/9/92/Grorlam.gif/revision/latest?cb=20070712222736&path-prefix=en"
+    },
+    "Gremlin": {
+        "monster_name": "Gremlin",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Green Djinn": {
+        "monster_name": "Green Djinn",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/e/e2/Green_Djinn.gif/revision/latest?cb=20050531231148&path-prefix=en"
+    },
+    "Goblin": {
+        "monster_name": "Goblin",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/4/45/Goblin.gif/revision/latest?cb=20150418105027&path-prefix=en"
+    },
+    "Giant Spider": {
+        "monster_name": "Giant Spider",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/9/99/Giant_Spider.gif/revision/latest?cb=20150421143720&path-prefix=en"
+    },
+    "Giant": {
+        "monster_name": "Giant",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Ghoul": {
+        "monster_name": "Ghoul",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/5/5a/Ghoul.gif/revision/latest?cb=20141110203515&path-prefix=en"
+    },
+    "Ghost": {
+        "monster_name": "Ghost",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/a/ab/Ghost.gif/revision/latest?cb=20060613220115&path-prefix=en"
+    },
+    "Gazer": {
+        "monster_name": "Gazer",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/8/82/Gazer.gif/revision/latest?cb=20060806031050&path-prefix=en"
+    },
+    "Gargoyle": {
+        "monster_name": "Gargoyle",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/9/99/Gargoyle.gif/revision/latest?cb=20070712030618&path-prefix=en"
+    },
+    "Frost Troll": {
+        "monster_name": "Frost Troll",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/8/83/Frost_Troll.gif/revision/latest?cb=20080206035651&path-prefix=en"
+    },
+    "Fox": {
+        "monster_name": "Fox",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Flamingo": {
+        "monster_name": "Flamingo",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/7/74/Flamingo.gif/revision/latest?cb=20150418075638&path-prefix=en"
+    },
+    "Fire Elemental": {
+        "monster_name": "Fire Elemental",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/1/18/Fire_Elemental.gif/revision/latest?cb=20080708135954&path-prefix=en"
+    },
+    "Fire Devil": {
+        "monster_name": "Fire Devil",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/f/f7/Fire_Devil.gif/revision/latest?cb=20050523051635&path-prefix=en"
+    },
+    "Fatty Boy Rick": {
+        "monster_name": "Fatty Boy Rick",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Ent": {
+        "monster_name": "Ent",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Elf Scout": {
+        "monster_name": "Elf Scout",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/0/05/Elf_Scout.gif/revision/latest?cb=20050530000427&path-prefix=en"
+    },
+    "Elf Arcanist": {
+        "monster_name": "Elf Arcanist",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/e/e8/Elf_Arcanist.gif/revision/latest?cb=20050531205624&path-prefix=en"
+    },
+    "Elf": {
+        "monster_name": "Elf",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/a/a8/Elf.gif/revision/latest?cb=20150418124626&path-prefix=en"
+    },
+    "Elephant": {
+        "monster_name": "Elephant",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/4/43/Elephant.gif/revision/latest?cb=20080711190210&path-prefix=en"
+    },
+    "Elemental Draconis": {
+        "monster_name": "Elemental Draconis",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Elder Beholder": {
+        "monster_name": "Elder Beholder",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/0/09/Elder_Bonelord.gif/revision/latest?cb=20120620224019&path-prefix=en"
+    },
+    "Efreet": {
+        "monster_name": "Efreet",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/d/de/Efreet.gif/revision/latest?cb=20070712030826&path-prefix=en"
+    },
+    "Dworc Voodoomaster": {
+        "monster_name": "Dworc Voodoomaster",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/f/f3/Dworc_Voodoomaster.gif/revision/latest?cb=20150418075602&path-prefix=en"
+    },
+    "Dworc Venomsniper": {
+        "monster_name": "Dworc Venomsniper",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/7/75/Dworc_Venomsniper.gif/revision/latest?cb=20150418075549&path-prefix=en"
+    },
+    "Dworc Fleshhunter": {
+        "monster_name": "Dworc Fleshhunter",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/5/5b/Dworc_Fleshhunter.gif/revision/latest?cb=20150418075540&path-prefix=en"
+    },
+    "Dwarf Soldier": {
+        "monster_name": "Dwarf Soldier",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/6/6c/Dwarf_Soldier.gif/revision/latest?cb=20070712030558&path-prefix=en"
+    },
+    "Dwarf Guard": {
+        "monster_name": "Dwarf Guard",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/f/f6/Dwarf_Guard.gif/revision/latest?cb=20070712222334&path-prefix=en"
+    },
+    "Dwarf Geomancer": {
+        "monster_name": "Dwarf Geomancer",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/0/0d/Dwarf_Geomancer.gif/revision/latest?cb=20070712222256&path-prefix=en"
+    },
+    "Dwarf": {
+        "monster_name": "Dwarf",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/7/73/Dwarf.gif/revision/latest?cb=20150418075532&path-prefix=en"
+    },
+    "Dragon Lord": {
+        "monster_name": "Dragon Lord",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/9/97/Dragon_Lord.gif/revision/latest?cb=20150418105002&path-prefix=en"
+    },
+    "Dragon": {
+        "monster_name": "Dragon",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/e/e0/Dragon.gif/revision/latest?cb=20140823213526&path-prefix=en"
+    },
+    "Dr Phil": {
+        "monster_name": "Dr Phil",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Dog": {
+        "monster_name": "Dog",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/9/99/Dog.gif/revision/latest?cb=20150416141602&path-prefix=en"
+    },
+    "Dipthrah": {
+        "monster_name": "Dipthrah",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/9/9f/Dipthrah.gif/revision/latest?cb=20060901021632&path-prefix=en"
+    },
+    "Dharalion": {
+        "monster_name": "Dharalion",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/d/d5/Dharalion.jpg/revision/latest/scale-to-width-down/212?cb=20090128205100&path-prefix=en"
+    },
+    "Demon Skeleton": {
+        "monster_name": "Demon Skeleton",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/d/de/Demon_Skeleton.gif/revision/latest?cb=20080506191853&path-prefix=en"
+    },
+    "Demon": {
+        "monster_name": "Demon",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/7/75/Demon.gif/revision/latest?cb=20150414134039&path-prefix=en"
+    },
+    "Demodras": {
+        "monster_name": "Demodras",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/7/73/Demodras.gif/revision/latest?cb=20150421210241&path-prefix=en"
+    },
+    "Delphian Draconis": {
+        "monster_name": "Delphian Draconis",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Deer": {
+        "monster_name": "Deer",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/b/be/Deer.gif/revision/latest?cb=20140823213222&path-prefix=en"
+    },
+    "Deathslicer": {
+        "monster_name": "Deathslicer",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/0/08/Deathslicer.gif/revision/latest?cb=20051212192653&path-prefix=en"
+    },
+    "Dark Wizard": {
+        "monster_name": "Dark Wizard",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Dark Monk": {
+        "monster_name": "Dark Monk",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/9/93/Dark_Monk.gif/revision/latest?cb=20050819180429&path-prefix=en"
+    },
+    "Cyclops": {
+        "monster_name": "Cyclops",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/9/99/Cyclops.gif/revision/latest?cb=20141110204909&path-prefix=en"
+    },
+    "Crypt Shambler": {
+        "monster_name": "Crypt Shambler",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/3/34/Crypt_Shambler.gif/revision/latest?cb=20050601042804&path-prefix=en"
+    },
+    "Crocodile": {
+        "monster_name": "Crocodile",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/c/c2/Crocodile.gif/revision/latest?cb=20080711185511&path-prefix=en"
+    },
+    "Crab": {
+        "monster_name": "Crab",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/7/7b/Crab.gif/revision/latest?cb=20150418075525&path-prefix=en"
+    },
+    "Cobra": {
+        "monster_name": "Cobra",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/3/38/Cobra.gif/revision/latest?cb=20150418124012&path-prefix=en"
+    },
+    "Chuck Norris": {
+        "monster_name": "Chuck Norris",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Chicken": {
+        "monster_name": "Chicken",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/a/a0/Chicken.gif/revision/latest?cb=20150418075507&path-prefix=en"
+    },
+    "Centipede": {
+        "monster_name": "Centipede",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/e/e6/Centipede.gif/revision/latest?cb=20150418075407&path-prefix=en"
+    },
+    "Centaur": {
+        "monster_name": "Centaur",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Cave Rat": {
+        "monster_name": "Cave Rat",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/f/fb/Cave_Rat.gif/revision/latest?cb=20140823213706&path-prefix=en"
+    },
+    "Carniphila": {
+        "monster_name": "Carniphila",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/b/ba/Carniphila.gif/revision/latest?cb=20150422152725&path-prefix=en"
+    },
+    "Calypso Troll": {
+        "monster_name": "Calypso Troll",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Butterfly": {
+        "monster_name": "Butterfly",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Bug": {
+        "monster_name": "Bug",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/a/a3/Bug.gif/revision/latest?cb=20150418075232&path-prefix=en"
+    },
+    "Boris of J am": {
+        "monster_name": "Boris of J am",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Bone Beast": {
+        "monster_name": "Bone Beast",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/9/9b/Bonebeast.gif/revision/latest?cb=20070712031154&path-prefix=en"
+    },
+    "Blue Djinn": {
+        "monster_name": "Blue Djinn",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/8/82/Blue_Djinn.gif/revision/latest?cb=20050531231721&path-prefix=en"
+    },
+    "Blue Butterfly": {
+        "monster_name": "Blue Butterfly",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Blessed Wizard": {
+        "monster_name": "Blessed Wizard",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Black Sheep": {
+        "monster_name": "Black Sheep",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/c/c2/Black_Sheep.gif/revision/latest?cb=20140120201531&path-prefix=en"
+    },
+    "Black Knight": {
+        "monster_name": "Black Knight",
+        "monster_image_url": "http://vignette3.wikia.nocookie.net/tibia/images/e/ef/Black_Knight.gif/revision/latest?cb=20060810013229&path-prefix=en"
+    },
+    "Bermudan Draconis": {
+        "monster_name": "Bermudan Draconis",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Beholder": {
+        "monster_name": "Beholder",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/5/55/Beholder.gif/revision/latest?cb=20080713212103&path-prefix=en"
+    },
+    "Behemoth": {
+        "monster_name": "Behemoth",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/7/70/Behemoth.gif/revision/latest?cb=20080711145925&path-prefix=en"
+    },
+    "Beheloniano Brutal": {
+        "monster_name": "Beheloniano Brutal",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Bear": {
+        "monster_name": "Bear",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/4/46/Bear.gif/revision/latest?cb=20140120205608&path-prefix=en"
+    },
+    "Bat": {
+        "monster_name": "Bat",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/0/09/Bat.gif/revision/latest?cb=20150421143833&path-prefix=en"
+    },
+    "Banshee": {
+        "monster_name": "Banshee",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/5/50/Banshee.gif/revision/latest?cb=20050417025231&path-prefix=en"
+    },
+    "Bandit": {
+        "monster_name": "Bandit",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/d/d4/Bandit.gif/revision/latest?cb=20060810012959&path-prefix=en"
+    },
+    "Badger": {
+        "monster_name": "Badger",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/3/3a/Badger.gif/revision/latest?cb=20150418075144&path-prefix=en"
+    },
+    "Athesh": {
+        "monster_name": "Athesh",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Assassin": {
+        "monster_name": "Assassin",
+        "monster_image_url": "http://vignette2.wikia.nocookie.net/tibia/images/3/37/Assassin.gif/revision/latest?cb=20140611173214&path-prefix=en"
+    },
+    "Ashtar": {
+        "monster_name": "Ashtar",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Ashmunrah": {
+        "monster_name": "Ashmunrah",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/4/48/Ashmunrah.gif/revision/latest?cb=20060901022456&path-prefix=en"
+    },
+    "Arm of Wrath": {
+        "monster_name": "Arm of Wrath",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Archdemon Kalius": {
+        "monster_name": "Archdemon Kalius",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Angel of Death": {
+        "monster_name": "Angel of Death",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Ancient Scarab": {
+        "monster_name": "Ancient Scarab",
+        "monster_image_url": "http://vignette4.wikia.nocookie.net/tibia/images/2/2c/Ancient_Scarab.gif/revision/latest?cb=20070906223754&path-prefix=en"
+    },
+    "Ancalagon the Black": {
+        "monster_name": "Ancalagon the Black",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "Amazon": {
+        "monster_name": "Amazon",
+        "monster_image_url": "http://vignette1.wikia.nocookie.net/tibia/images/9/9c/Amazon.gif/revision/latest?cb=20060810012726&path-prefix=en"
+    },
+    "Adonis Yetiroth": {
+        "monster_name": "Adonis Yetiroth",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    },
+    "ALLAH AKBAR": {
+        "monster_name": "ALLAH AKBAR",
+        "monster_image_url": "https://cdn1.iconfinder.com/data/icons/metroicons/black/questionmark.png"
+    }
+}
